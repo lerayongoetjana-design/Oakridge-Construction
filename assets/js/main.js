@@ -48,7 +48,7 @@
     if (e.key === "Escape" && body.classList.contains("nav-open")) setMenu(false);
   });
   window.addEventListener("resize", function () {
-    if (window.innerWidth >= 1080 && body.classList.contains("nav-open")) setMenu(false);
+    if (window.innerWidth >= 1200 && body.classList.contains("nav-open")) setMenu(false);
   });
 
   /* Reveal on scroll ----------------------------------------------------- */
