@@ -14,7 +14,7 @@ A premium, multi-page website for **Oakridge Construction**, a *fictional* South
 | About Us | `about.html` | Story, values, mission and vision, timeline, fictional leadership team, standards |
 | Services | `services.html` | Six services, illustrative rand cost calculator, sectors, process, FAQ |
 | Projects | `projects.html` | Filterable gallery with lightbox and tilt cards, before-and-after slider, featured concept |
-| 3D Studio | `studio.html` | Interactive WebGL viewer: three models, orbit/zoom/pan, hotspots, exploded view, construction-stage slider |
+| 3D Studio | `studio.html` | Immersive experience of The Sandton Exchange: cinematic intro, camera views, day/night, hotspots, exploded floors, 8-stage construction timeline, material configurator |
 | Our Process | `process.html` | Six-stage delivery process, commitments, FAQ |
 | Contact | `contact.html` | Demonstration quotation form, offices, map |
 
@@ -30,6 +30,45 @@ Residential construction, commercial construction, industrial construction, reno
 - **GSAP + ScrollTrigger** for word-by-word headline reveals, the pinned construction sequence, subtle parallax and animated project cards. Also a premium first-visit loader and page transitions.
 - **Performance:** the 3D engine and Three.js are lazy-loaded only when a 3D section approaches the viewport. Rendering pauses off-screen, pixel ratio and shadow resolution are capped on touch devices, and models are cached between views.
 - **Accessibility:** with `prefers-reduced-motion`, the loader, transitions, parallax and camera motion are switched off, and the construction sequence becomes a slider instead of a scroll pin. The 3D Studio supports touch (one finger to rotate, pinch to zoom, two fingers to pan), keyboard orbit and zoom, and labelled controls.
+
+## 3D Studio: The Sandton Exchange
+
+`assets/js/experience.js` is a dedicated real-time engine for the commercial tower.
+
+- **Model:** `assets/models/commercial.glb` (about 520 KB) is an original, detailed office tower. It has a recessed curtain wall with bronze aluminium mullions, stone spandrels, concrete core and columns, side balconies with glass balustrades, and a double-height lobby with revolving door, canopy and reception. Office furniture and ceiling lights are visible through the glass, along with a podium terrace, three rooftop layouts, a louvred plant enclosure with solar panels, architectural LED lighting, a tower crane and site hoarding.
+- **Environment:** `assets/models/environment.glb` (about 180 KB) holds roads with markings, sidewalks, parking bays with instanced cars, landscaped gardens with instanced trees and shrubs, streetlights, benches, a basement ramp, neighbouring buildings and a distant skyline.
+- **Rendering:**
+  - **Materials:** physically based, with glass transmission on capable devices and reflective glass on phones.
+  - **Sky and lighting:** a physical sky drives both the background and the environment lighting.
+  - **Shadows and effects:** soft shadows, ambient occlusion (desktop), bloom for illuminated elements, and filmic tone mapping.
+  - **Textures:** generated in the browser and mapped in world space.
+- **Controls:**
+  - **Camera:** orbit, zoom, pan and touch; auto-rotate, fullscreen and reset; six cinematic camera views with curved transitions.
+  - **Lighting:** four lighting modes (morning, afternoon, sunset, night).
+  - **Information:** eight hotspots with fictional specifications.
+  - **Exploded view:** floors separate, can be selected (in the list or by clicking the model) and show a simplified floor plan.
+  - **Timeline:** an 8-stage construction timeline with slider, play, pause and reset.
+  - **Configurator:** glass, cladding, frames, concrete, exterior lighting, landscaping and rooftop layout.
+- **Performance:** lazy-loaded, with meshopt-compressed models, instanced vegetation and vehicles, and adaptive resolution. Interior detail is hidden at long range, phones get lighter shadows and no transmission or AO, and a still render is shown without WebGL.
+- **Accessibility:** a skippable intro (skipped automatically with reduced motion), keyboard orbit and zoom, labelled controls, and Escape to close panels.
+
+### Rebuilding the models
+
+```
+cd tools && npm install
+node generate-exchange.mjs          # writes tools/build/*.glb
+npx @gltf-transform/cli meshopt build/commercial.glb ../assets/models/commercial.glb
+npx @gltf-transform/cli meshopt build/environment.glb ../assets/models/environment.glb
+node generate-models.mjs            # residential + industrial models for the home page
+```
+
+Fallback stills in `assets/img/3d/` are rendered from the live models (see `tools/capture.html`).
+
+### Known limits (would need additional assets)
+
+- Environment lighting comes from a procedural physical sky rather than a photographic HDRI. A CC0 HDRI (for example from Poly Haven) would give richer reflections.
+- Surface textures are generated in the browser. Photo-scanned PBR texture sets (concrete, stone, paving, timber), including normal and roughness maps, would add close-up realism.
+- Trees, cars and furniture are original but stylised geometry. Licensed, professionally modelled GLB assets would be needed for photographic detail.
 
 ## Interactive features
 

@@ -475,6 +475,21 @@
     }
   }
 
+  // Immersive 3D Studio (The Sandton Exchange)
+  var xpEl = document.querySelector("[data-xp]");
+  if (xpEl) {
+    if (!webglOK() || !("noModule" in HTMLScriptElement.prototype)) {
+      xpEl.classList.add("is-fallback");
+    } else {
+      new Function("u", "return import(u)")(new URL("experience.js", SCRIPT_SRC).href)
+        .then(function (m) { return m.mount(xpEl); })
+        .catch(function (err) {
+          xpEl.classList.add("is-fallback");
+          if (window.console) console.warn("3D experience unavailable, showing a still image.", err);
+        });
+    }
+  }
+
   // Static-image fallback still lets visitors switch models.
   document.querySelectorAll("[data-oak3d-section]").forEach(function (sec) {
     var stage = sec.querySelector("[data-oak3d]");
@@ -630,7 +645,8 @@
       q("[data-lb-count]").textContent = (lbIndex + 1) + " / " + list.length;
       var model = card.getAttribute("data-model"), link = q("[data-lb-3d]");
       link.hidden = !model;
-      if (model) link.href = "studio.html?model=" + model;
+      // The tower has the full 3D Studio; the villa and warehouse live in the home page sequence.
+      if (model) link.href = model === "commercial" ? "studio.html" : "index.html#build-title";
     };
     var openLb = function (card, opener) {
       lbIndex = Math.max(0, lbCards().indexOf(card));

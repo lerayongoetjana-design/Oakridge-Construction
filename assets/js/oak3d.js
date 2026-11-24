@@ -5,6 +5,7 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
 
 const MODEL_URL = (name) => new URL(`../models/${name}.glb`, import.meta.url).href;
 const REDUCE = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -64,7 +65,7 @@ const easeInOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) 
 const lerp = (a, b, t) => a + (b - a) * t;
 
 /* Model loading (cached) -------------------------------------------------- */
-const loader = new GLTFLoader();
+const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
 const cache = new Map();
 function loadModel(name) {
   if (!cache.has(name)) cache.set(name, loader.loadAsync(MODEL_URL(name)));
@@ -81,6 +82,8 @@ class Building {
     this.gap = 3;
     scene.traverse((o) => {
       if (o.userData && o.userData.explodeGap) this.gap = o.userData.explodeGap;
+      // Configurator variants (e.g. alternative rooftops): only the default shows here.
+      if (o.userData && o.userData.config && !o.userData.isDefault) { o.visible = false; o.userData.phase = null; return; }
       if (o.userData && o.userData.phase) {
         this.pieces.push({ obj: o, phase: o.userData.phase, level: o.userData.level, baseY: o.position.y });
       }
@@ -90,6 +93,8 @@ class Building {
         o.receiveShadow = true;
         // Each viewer gets its own materials so dusk and daylight scenes can differ.
         const m = (o.material = o.material.clone());
+        // The light homepage viewer swaps costly transmission glass for reflective glass.
+        if (m.transmission) { m.transmission = 0; m.transparent = true; m.opacity = /balustrade|lobby/.test(m.name) ? 0.35 : 0.88; m.metalness = 0.6; m.roughness = 0.08; }
         m.envMapIntensity = /glass/.test(m.name) ? 1.6 : m.name === "bronze" ? 1.3 : 0.7;
         if (m.name === "glass-warm") m.emissiveIntensity = dusk ? 1.4 : 0.12;
       }
@@ -113,7 +118,7 @@ class Building {
   measure() {
     this.apply(1, 0);
     const box = new THREE.Box3();
-    this.pieces.forEach((p) => { if (p.phase !== "site" && p.phase !== "crane") box.expandByObject(p.obj); });
+    this.pieces.forEach((p) => { if (p.phase !== "site" && p.phase !== "crane" && p.phase !== "temp") box.expandByObject(p.obj); });
     this.box = box;
     this.center = box.getCenter(new THREE.Vector3());
     this.size = box.getSize(new THREE.Vector3());
@@ -124,7 +129,7 @@ class Building {
     this.explode = explode;
     for (const p of this.pieces) {
       let t;
-      if (p.phase === "crane") {
+      if (p.phase === "crane" || p.phase === "temp") {
         t = progress < 0.08 ? progress / 0.08 : progress > 0.84 ? 1 - (progress - 0.84) / 0.06 : 1;
       } else {
         t = (progress - p.start) / p.dur;

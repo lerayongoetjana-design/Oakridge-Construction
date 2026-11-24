@@ -349,7 +349,8 @@ const outDir = path.resolve(here, "../assets/models");
 mkdirSync(outDir, { recursive: true });
 const exporter = new GLTFExporter();
 
-for (const [file, build] of [["residential", residential], ["commercial", commercial], ["industrial", industrial]]) {
+// The commercial tower is now generated in far more detail by generate-exchange.mjs.
+for (const [file, build] of [["residential", residential], ["industrial", industrial]]) {
   const scene = new THREE.Scene();
   scene.add(build());
   const glb = await exporter.parseAsync(scene, { binary: true });

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>3D Studio | Oakridge Construction (Demo)</title>
-  <meta name="description" content="Explore original interactive 3D building models: rotate, zoom, open hotspots, view an exploded structure and scrub through construction.">
+  <meta name="description" content="Explore The Sandton Exchange, a fictional office development, in real-time 3D: cinematic views, day and night lighting, construction timeline, exploded floors and a material configurator.">
   <meta name="robots" content="noindex, nofollow">
   <meta name="googlebot" content="noindex, nofollow">
   <meta name="author" content="Launch Point Digital">
@@ -12,12 +12,12 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Oakridge Construction (fictional demonstration)">
   <meta property="og:title" content="3D Studio | Oakridge Construction (Demo)">
-  <meta property="og:description" content="Explore original interactive 3D building models: rotate, zoom, open hotspots, view an exploded structure and scrub through construction.">
+  <meta property="og:description" content="Explore The Sandton Exchange, a fictional office development, in real-time 3D: cinematic views, day and night lighting, construction timeline, exploded floors and a material configurator.">
   <meta property="og:image" content="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80">
   <meta property="og:locale" content="en_ZA">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="3D Studio | Oakridge Construction (Demo)">
-  <meta name="twitter:description" content="Explore original interactive 3D building models: rotate, zoom, open hotspots, view an exploded structure and scrub through construction.">
+  <meta name="twitter:description" content="Explore The Sandton Exchange, a fictional office development, in real-time 3D: cinematic views, day and night lighting, construction timeline, exploded floors and a material configurator.">
   <meta name="twitter:image" content="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="assets/img/favicon.svg">
@@ -90,88 +90,104 @@
   </nav>
 
   <main id="main">
-    <section class="studio" data-oak3d-section aria-labelledby="studio-title">
-      <div class="studio-layout">
-        <div class="studio-panel">
-          <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">/</span><span aria-current="page">3D Studio</span></nav>
-          <div>
-            <span class="eyebrow" style="margin-bottom:1rem">3D Studio</span>
-            <h1 id="studio-title">Explore in <em>three dimensions</em></h1>
-          </div>
-          <div class="model-tabs" role="tablist" aria-label="Choose a building model"><button type="button" role="tab" data-model-tab="residential" aria-selected="false" tabindex="-1" class="" data-fallback="assets/img/3d/residential.jpg" data-title="Constantia Hill Villa" data-type="Residential" data-location="Constantia, Cape Town" data-text="A two-storey family home with a cantilevered timber-clad upper floor, full-height glazing and a pool terrace.">Residential</button><button type="button" role="tab" data-model-tab="commercial" aria-selected="true" tabindex="0" class="is-active" data-fallback="assets/img/3d/commercial.jpg" data-title="The Sandton Exchange" data-type="Commercial" data-location="Sandton, Johannesburg" data-text="A premium office tower on a two-storey podium, wrapped in glass and bronze fins that shade the façade.">Commercial</button><button type="button" role="tab" data-model-tab="industrial" aria-selected="false" tabindex="-1" class="" data-fallback="assets/img/3d/industrial.jpg" data-title="Midrand Logistics Park" data-type="Industrial" data-location="Midrand, Gauteng" data-text="A distribution warehouse with a clear-span steel frame, eight loading docks and a two-storey glass office.">Industrial</button></div>
-          <div class="studio-model" aria-live="polite">
-            <span class="type" data-model-field="type">Commercial</span>
-            <h2 data-model-field="title">The Sandton Exchange</h2>
-            <span class="loc" data-model-field="location">Sandton, Johannesburg</span>
-            <p data-model-field="text">A premium office tower on a two-storey podium, wrapped in glass and bronze fins that shade the façade.</p>
-            <dl class="studio-facts" data-model-field="facts"></dl>
-          </div>
-          <div>
-            <label class="studio-label" for="studio-progress">Construction stage <output data-progress-pct>100%</output></label>
-            <input class="studio-range" id="studio-progress" type="range" min="0" max="100" value="100" data-progress-range>
-            <ol class="visually-hidden"><li data-stage><button type="button" data-stage-at="0.06" class="visually-hidden">Site &amp; foundations</button></li><li data-stage><button type="button" data-stage-at="0.33" class="visually-hidden">Structural frame</button></li><li data-stage><button type="button" data-stage-at="0.62" class="visually-hidden">Façade &amp; envelope</button></li><li data-stage><button type="button" data-stage-at="0.84" class="visually-hidden">Roof &amp; services</button></li><li data-stage><button type="button" data-stage-at="1.0" class="visually-hidden">Landscaping &amp; handover</button></li></ol>
-          </div>
-          <div class="studio-tools"><button class="tool" type="button" data-action="explode" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 7l8-4 8 4-8 4z"/><path d="M4 12l8 4 8-4"/><path d="M4 17l8 4 8-4"/></svg>Exploded view</button><button class="tool" type="button" data-action="hotspots" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/></svg>Hotspots</button><button class="tool" type="button" data-action="rotate" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg>Auto-rotate</button><button class="tool" type="button" data-action="reset"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>Reset view</button></div>
-          <p class="studio-help"><strong style="color:var(--white)">Controls:</strong> drag to rotate, scroll or pinch to zoom, right-drag or two fingers to pan. When the model is focused, use the arrow keys to orbit and + / &minus; to zoom.</p>
-        </div>
-        <div class="studio-view">
-          <div class="oak3d" data-oak3d="studio" data-model="commercial">
-            <img class="oak3d-fallback" src="assets/img/3d/commercial.jpg" alt="Rendered view of the selected 3D building model">
-            <div class="oak3d-loading" aria-hidden="true"><span></span>Loading 3D model</div>
-            <p class="oak3d-nogl">3D is not available on this device, so a still render is shown.</p>
-          </div>
-          <span class="studio-badge">Original model &middot; Fictional concept</span>
-          <div class="studio-zoom">
-            <button type="button" data-action="zoom-in" aria-label="Zoom in">+</button>
-            <button type="button" data-action="zoom-out" aria-label="Zoom out">&minus;</button>
-          </div>
-          <div class="hotspot-card" data-hotspot-card hidden role="dialog" aria-labelledby="hs-title">
-            <span class="num" data-hotspot-num>01</span>
-            <h3 id="hs-title" data-hotspot-title></h3>
-            <p data-hotspot-text></p>
-            <button type="button" data-hotspot-close aria-label="Close hotspot details"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
-          </div>
-        </div>
+    <h1 class="visually-hidden">3D Studio: The Sandton Exchange, a fictional commercial development</h1>
+    <section class="xp" data-xp aria-label="Interactive 3D experience">
+      <div class="xp-stage" data-xp-stage tabindex="0" role="application" aria-roledescription="3D viewer"
+           aria-label="Interactive 3D model of The Sandton Exchange, a fictional office development. Use the arrow keys to orbit and plus or minus to zoom.">
+        <img class="xp-fallback" src="assets/img/3d/exchange.jpg" alt="Rendered view of The Sandton Exchange, a fictional office tower, at sunset">
       </div>
+      <div class="xp-hotspots" data-xp-hotspots hidden></div>
+
+      <div class="xp-loading" aria-live="polite">
+        <svg class="xp-loading-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+          <rect x="0.75" y="0.75" width="38.5" height="38.5" stroke="#B58B52" stroke-width="1.2"/>
+          <path d="M8 29 20 10l12 19" stroke="#B58B52" stroke-width="1.4"/>
+          <path d="M14 29l6-9.5 6 9.5" stroke="currentColor" stroke-width="1.2"/>
+          <path d="M6 29h28" stroke="currentColor" stroke-width="1.2"/>
+        </svg>
+        <p>Preparing The Sandton Exchange</p>
+        <div class="xp-bar"><i data-xp-progress></i></div>
+        <span class="xp-pct" data-xp-pct>0%</span>
+        <small>Original 3D model &middot; Fictional demonstration</small>
+      </div>
+
+      <div class="xp-intro" data-xp-intro hidden>
+        <span class="eyebrow xp-intro-anim">The Sandton Exchange &middot; Fictional development</span>
+        <p class="xp-intro-title xp-intro-anim">Architecture without limits</p>
+        <p class="xp-intro-text xp-intro-anim">Explore the future of commercial development through an immersive architectural experience.</p>
+        <button class="btn btn--ghost xp-intro-anim" type="button" data-xp-skip>Skip introduction</button>
+      </div>
+
+      <div class="xp-badge"><span>3D Studio</span><strong>The Sandton Exchange</strong><small>Fictional demonstration &middot; Launch Point Digital</small></div>
+
+      <nav class="xp-dock" aria-label="3D experience controls"><button class="xp-dock-btn" type="button" data-xp-mode="explore" aria-pressed="false" aria-controls="xp-panel-explore"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg><span>Explore Building</span></button><button class="xp-dock-btn" type="button" data-xp-mode="timeline" aria-pressed="false" aria-controls="xp-panel-timeline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h16"/><path d="M7 20V9l5-4 5 4v11"/><path d="M10 20v-5h4v5"/><path d="M3 5h8"/></svg><span>Construction Timeline</span></button><button class="xp-dock-btn" type="button" data-xp-mode="exploded" aria-pressed="false" aria-controls="xp-panel-exploded"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7l8-4 8 4-8 4z"/><path d="M4 12l8 4 8-4"/><path d="M4 17l8 4 8-4"/></svg><span>Exploded View</span></button><button class="xp-dock-btn" type="button" data-xp-mode="customise" aria-pressed="false" aria-controls="xp-panel-customise"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg><span>Customise Materials</span></button><button class="xp-dock-btn" type="button" data-xp-mode="lighting" aria-pressed="false" aria-controls="xp-panel-lighting"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><span>Day / Night</span></button><button class="xp-dock-btn" type="button" data-xp-mode="cameras" aria-pressed="false" aria-controls="xp-panel-cameras"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h4l2-3h6l2 3h4v11H3z"/><circle cx="12" cy="13" r="3.5"/></svg><span>Camera Views</span></button><button class="xp-dock-btn" type="button" data-xp-action="fullscreen" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><span>Fullscreen</span></button><button class="xp-dock-btn" type="button" data-xp-action="reset"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg><span>Reset Experience</span></button></nav>
+
+        <aside class="xp-panel" id="xp-panel-explore" data-panel="explore" hidden aria-label="Explore building">
+          <h2 class="xp-panel-title">Explore building</h2>
+          <p class="xp-help">Drag to orbit, scroll or pinch to zoom, right-drag or use two fingers to pan. Select a numbered hotspot to fly to it.</p>
+          <button class="xp-toggle" type="button" data-xp-action="rotate" aria-pressed="false">Auto-rotate</button>
+          <ol class="xp-list"><li><button type="button" data-hotspot-open="0"><b>01</b>Reception &amp; arrival lobby</button></li><li><button type="button" data-hotspot-open="1"><b>02</b>Conference facilities</button></li><li><button type="button" data-hotspot-open="2"><b>03</b>Commercial office space</button></li><li><button type="button" data-hotspot-open="3"><b>04</b>Executive offices</button></li><li><button type="button" data-hotspot-open="4"><b>05</b>Rooftop terrace</button></li><li><button type="button" data-hotspot-open="5"><b>06</b>Building façade</button></li><li><button type="button" data-hotspot-open="6"><b>07</b>Sustainable building systems</button></li><li><button type="button" data-hotspot-open="7"><b>08</b>Parking facilities</button></li></ol>
+        </aside>
+
+        <aside class="xp-panel" id="xp-panel-timeline" data-panel="timeline" hidden aria-label="Construction timeline">
+          <h2 class="xp-panel-title">Construction timeline</h2>
+          <div class="xp-stagecard" aria-live="polite"><b data-stage-num>08</b><div><strong data-stage-name>Completed development</strong><p data-stage-text></p></div></div>
+          <label class="visually-hidden" for="xp-timeline">Construction progress</label>
+          <input class="xp-range" id="xp-timeline" type="range" min="0" max="800" value="800" data-timeline-range>
+          <div class="xp-row"><button class="xp-toggle" type="button" data-timeline-play aria-pressed="false"><span>Play</span></button><button class="xp-toggle" type="button" data-timeline-reset>Reset</button></div>
+          <ol class="xp-list xp-list--stages"><li><button type="button" data-stage-jump><b>01</b>Site preparation</button></li><li><button type="button" data-stage-jump><b>02</b>Foundation development</button></li><li><button type="button" data-stage-jump><b>03</b>Structural framework</button></li><li><button type="button" data-stage-jump><b>04</b>Floor construction</button></li><li><button type="button" data-stage-jump><b>05</b>External façade installation</button></li><li><button type="button" data-stage-jump><b>06</b>Interior finishing</button></li><li><button type="button" data-stage-jump><b>07</b>Landscaping</button></li><li><button type="button" data-stage-jump><b>08</b>Completed development</button></li></ol>
+        </aside>
+
+        <aside class="xp-panel" id="xp-panel-exploded" data-panel="exploded" hidden aria-label="Exploded view">
+          <h2 class="xp-panel-title">Exploded view</h2>
+          <p class="xp-help">Floors separate to reveal the core, columns and fit-out. Choose a floor here, or click one in the model.</p>
+          <div class="xp-floorinfo" data-floor-info hidden><strong data-floor-name></strong><p data-floor-text></p><div class="xp-plan" data-floor-plan></div></div>
+          <ol class="xp-list xp-list--floors"><li><button type="button" data-floor="12" aria-pressed="false"><b>Roof</b><span>Terrace &amp; plant</span></button></li><li><button type="button" data-floor="11" aria-pressed="false"><b>Level 11</b><span>Executive offices</span></button></li><li><button type="button" data-floor="10" aria-pressed="false"><b>Level 10</b><span>Executive offices</span></button></li><li><button type="button" data-floor="9" aria-pressed="false"><b>Level 9</b><span>Commercial offices</span></button></li><li><button type="button" data-floor="8" aria-pressed="false"><b>Level 8</b><span>Commercial offices</span></button></li><li><button type="button" data-floor="7" aria-pressed="false"><b>Level 7</b><span>Commercial offices</span></button></li><li><button type="button" data-floor="6" aria-pressed="false"><b>Level 6</b><span>Commercial offices</span></button></li><li><button type="button" data-floor="5" aria-pressed="false"><b>Level 5</b><span>Commercial offices</span></button></li><li><button type="button" data-floor="4" aria-pressed="false"><b>Level 4</b><span>Commercial offices</span></button></li><li><button type="button" data-floor="3" aria-pressed="false"><b>Level 3</b><span>Commercial offices</span></button></li><li><button type="button" data-floor="2" aria-pressed="false"><b>Level 2</b><span>Commercial offices</span></button></li><li><button type="button" data-floor="1" aria-pressed="false"><b>Level 1</b><span>Conference centre</span></button></li><li><button type="button" data-floor="0" aria-pressed="false"><b>Ground floor</b><span>Reception &amp; lobby</span></button></li></ol>
+          <button class="xp-toggle" type="button" data-reassemble>Reassemble building</button>
+        </aside>
+
+        <aside class="xp-panel" id="xp-panel-customise" data-panel="customise" hidden aria-label="Customise materials">
+          <h2 class="xp-panel-title">Customise materials</h2>
+          <p class="xp-help">Changes apply to the model in real time.</p><fieldset class="xp-opt"><legend>Glass tint</legend><div><button type="button" data-option="glass" data-value="clear" aria-pressed="true"><i style="background:#dfe8e8" aria-hidden="true"></i>Clear low-iron</button><button type="button" data-option="glass" data-value="bronze" aria-pressed="false"><i style="background:#d8be98" aria-hidden="true"></i>Bronze tint</button><button type="button" data-option="glass" data-value="grey" aria-pressed="false"><i style="background:#a5acaf" aria-hidden="true"></i>Solar grey</button><button type="button" data-option="glass" data-value="green" aria-pressed="false"><i style="background:#a8cfc6" aria-hidden="true"></i>Blue-green</button></div></fieldset><fieldset class="xp-opt"><legend>Exterior cladding</legend><div><button type="button" data-option="cladding" data-value="travertine" aria-pressed="true"><i style="background:#d8cdb8" aria-hidden="true"></i>Travertine stone</button><button type="button" data-option="cladding" data-value="charcoal" aria-pressed="false"><i style="background:#3b3b3c" aria-hidden="true"></i>Charcoal metal</button><button type="button" data-option="cladding" data-value="ivory" aria-pressed="false"><i style="background:#f1ece2" aria-hidden="true"></i>Ivory composite</button></div></fieldset><fieldset class="xp-opt"><legend>Aluminium frames</legend><div><button type="button" data-option="frame" data-value="bronze" aria-pressed="true"><i style="background:#9c7a4c" aria-hidden="true"></i>Bronze</button><button type="button" data-option="frame" data-value="champagne" aria-pressed="false"><i style="background:#c9b58e" aria-hidden="true"></i>Champagne</button><button type="button" data-option="frame" data-value="black" aria-pressed="false"><i style="background:#232323" aria-hidden="true"></i>Black</button><button type="button" data-option="frame" data-value="silver" aria-pressed="false"><i style="background:#b8bbbe" aria-hidden="true"></i>Silver</button></div></fieldset><fieldset class="xp-opt"><legend>Concrete finish</legend><div><button type="button" data-option="concrete" data-value="smooth" aria-pressed="true"><i style="background:#c2bcb2" aria-hidden="true"></i>Smooth light</button><button type="button" data-option="concrete" data-value="board" aria-pressed="false"><i style="background:#b5ada1" aria-hidden="true"></i>Board-formed</button><button type="button" data-option="concrete" data-value="dark" aria-pressed="false"><i style="background:#6d6964" aria-hidden="true"></i>Dark polished</button></div></fieldset><fieldset class="xp-opt"><legend>Exterior lighting</legend><div><button type="button" data-option="lighting" data-value="warm" aria-pressed="true"><i style="background:#ffd9a0" aria-hidden="true"></i>Warm white</button><button type="button" data-option="lighting" data-value="neutral" aria-pressed="false"><i style="background:#eef2ff" aria-hidden="true"></i>Neutral white</button><button type="button" data-option="lighting" data-value="amber" aria-pressed="false"><i style="background:#ffa850" aria-hidden="true"></i>Bronze amber</button><button type="button" data-option="lighting" data-value="off" aria-pressed="false"><i style="background:#1c1c1c" aria-hidden="true"></i>Off</button></div></fieldset><fieldset class="xp-opt"><legend>Landscaping</legend><div><button type="button" data-option="landscape" data-value="lush" aria-pressed="true"><i style="background:#4f6d36" aria-hidden="true"></i>Lush subtropical</button><button type="button" data-option="landscape" data-value="fynbos" aria-pressed="false"><i style="background:#8a8656" aria-hidden="true"></i>Indigenous fynbos</button><button type="button" data-option="landscape" data-value="minimal" aria-pressed="false"><i style="background:#b9ad97" aria-hidden="true"></i>Minimal xeriscape</button></div></fieldset><fieldset class="xp-opt"><legend>Rooftop garden</legend><div><button type="button" data-option="roof" data-value="garden" aria-pressed="true"><i style="background:#5c7a3a" aria-hidden="true"></i>Garden lounge</button><button type="button" data-option="roof" data-value="pool" aria-pressed="false"><i style="background:#3f6f7a" aria-hidden="true"></i>Pool deck</button><button type="button" data-option="roof" data-value="solar" aria-pressed="false"><i style="background:#1b2633" aria-hidden="true"></i>Solar &amp; garden</button></div></fieldset>
+        </aside>
+
+        <aside class="xp-panel" id="xp-panel-lighting" data-panel="lighting" hidden aria-label="Day / night">
+          <h2 class="xp-panel-title">Day / night</h2>
+          <div class="xp-cards"><button type="button" class="xp-card-btn" data-mode="morning" aria-pressed="false"><b>Morning</b><span>Low eastern sun</span></button><button type="button" class="xp-card-btn" data-mode="afternoon" aria-pressed="false"><b>Afternoon</b><span>High, bright daylight</span></button><button type="button" class="xp-card-btn" data-mode="sunset" aria-pressed="true"><b>Sunset</b><span>Golden hour, lights on</span></button><button type="button" class="xp-card-btn" data-mode="night" aria-pressed="false"><b>Night</b><span>Interiors and façade lit</span></button></div>
+        </aside>
+
+        <aside class="xp-panel" id="xp-panel-cameras" data-panel="cameras" hidden aria-label="Camera views">
+          <h2 class="xp-panel-title">Camera views</h2>
+          <div class="xp-cards"><button type="button" class="xp-card-btn" data-camera="front" aria-pressed="false"><b>Front elevation</b></button><button type="button" class="xp-card-btn" data-camera="rear" aria-pressed="false"><b>Rear elevation</b></button><button type="button" class="xp-card-btn" data-camera="street" aria-pressed="false"><b>Street-level entrance</b></button><button type="button" class="xp-card-btn" data-camera="aerial" aria-pressed="false"><b>Aerial view</b></button><button type="button" class="xp-card-btn" data-camera="rooftop" aria-pressed="false"><b>Rooftop terrace</b></button><button type="button" class="xp-card-btn" data-camera="reception" aria-pressed="false"><b>Interior reception</b></button></div>
+        </aside>
+
+      <aside class="xp-info" data-xp-info hidden role="dialog" aria-labelledby="xp-info-title">
+        <span class="xp-info-num" data-info-num>01</span>
+        <h2 id="xp-info-title" data-info-title></h2>
+        <span class="xp-fictional">Fictional demonstration content</span>
+        <p data-info-text></p>
+        <dl data-info-facts></dl>
+        <small data-info-note></small>
+        <button class="xp-info-close" type="button" data-info-close aria-label="Close information panel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </aside>
+      <p class="visually-hidden" data-xp-live aria-live="polite"></p>
+      <p class="xp-nogl">Interactive 3D needs WebGL, which is not available on this device, so a still render is shown.</p>
     </section>
 
     <section class="section section--ivory">
       <div class="container">
         <div class="section-head section-head--split">
           <div>
-            <span class="eyebrow reveal">The Models</span>
-            <h2 class="reveal" data-delay="1">Three buildings, <em>built in code</em></h2>
+            <span class="eyebrow reveal">About this experience</span>
+            <h2 class="reveal" data-delay="1">Built in code, <em>rendered live</em></h2>
           </div>
-          <p class="reveal" data-delay="2">Each model was created from scratch for this demonstration and is split into foundations, frame, envelope, roof and landscaping, which is what powers the construction sequence and exploded view.</p>
+          <p class="reveal" data-delay="2">The Sandton Exchange and its surroundings are original 3D models created for this demonstration and rendered in real time in your browser with Three.js and WebGL. The building, its specifications and its location are fictional.</p>
         </div>
-        <div class="model-cards">
-          <article class="model-card">
-            <img src="assets/img/3d/residential.jpg" alt="Render of the Constantia Hill Villa model" loading="lazy" width="1600" height="1000">
-            <div>
-              <span class="project-cat" style="color:var(--bronze)">Residential</span>
-              <h3>Constantia Hill Villa</h3>
-              <p>A two-storey family home with a cantilevered timber-clad upper floor, full-height glazing and a pool terrace.</p>
-              <a class="link-arrow" href="studio.html?model=residential">Load this model <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
-            </div>
-          </article>
-          <article class="model-card">
-            <img src="assets/img/3d/commercial.jpg" alt="Render of the The Sandton Exchange model" loading="lazy" width="1600" height="1000">
-            <div>
-              <span class="project-cat" style="color:var(--bronze)">Commercial</span>
-              <h3>The Sandton Exchange</h3>
-              <p>A premium office tower on a two-storey podium, wrapped in glass and bronze fins that shade the façade.</p>
-              <a class="link-arrow" href="studio.html?model=commercial">Load this model <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
-            </div>
-          </article>
-          <article class="model-card">
-            <img src="assets/img/3d/industrial.jpg" alt="Render of the Midrand Logistics Park model" loading="lazy" width="1600" height="1000">
-            <div>
-              <span class="project-cat" style="color:var(--bronze)">Industrial</span>
-              <h3>Midrand Logistics Park</h3>
-              <p>A distribution warehouse with a clear-span steel frame, eight loading docks and a two-storey glass office.</p>
-              <a class="link-arrow" href="studio.html?model=industrial">Load this model <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
-            </div>
-          </article>
+        <div class="values">
+          <div class="value reveal"><h3>Original models</h3><p>Every façade panel, tree and car is generated from code and stored as compressed GLB files, with no third-party models or textures.</p></div>
+          <div class="value reveal" data-delay="1"><h3>Real-time light</h3><p>Physically based materials, a physical sky for environment lighting, soft shadows, ambient occlusion and bloom.</p></div>
+          <div class="value reveal" data-delay="2"><h3>Built for every screen</h3><p>Touch gestures, keyboard controls and adaptive resolution, with a still image where WebGL is not available.</p></div>
+          <div class="value reveal" data-delay="3"><h3>More in 3D</h3><p>The residential villa and logistics park can be explored in the construction sequence on the <a href="index.html#build-title" style="color:var(--bronze-dark);text-decoration:underline">home page</a>.</p></div>
         </div>
       </div>
     </section>
@@ -182,7 +198,7 @@
         <div class="reveal">
           <span class="eyebrow">Start Your Project</span>
           <h2>See your project <em>before</em> it is built.</h2>
-          <p>Talk to Oakridge about bringing 3D visualisation into your next development.</p>
+          <p>Talk to Oakridge about bringing real-time 3D visualisation into your next development.</p>
         </div>
         <div class="reveal" data-delay="1" style="display:flex;flex-wrap:wrap;gap:1rem">
           <a class="btn" href="contact.html">Request a Quote <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
