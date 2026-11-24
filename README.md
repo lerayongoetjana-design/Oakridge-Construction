@@ -6,8 +6,8 @@ A premium, multi-page website for Oakridge Construction, a fictional South Afric
 
 ## Pages
 
-- **Home** (`index.html`): hero, company introduction, key figures, services, featured projects, process, testimonials and accreditations
-- **About Us** (`about.html`): company story, values, mission and vision, milestones timeline and leadership team
+- **Home** (`index.html`): full-screen hero with quote and project calls to action, company introduction, four service categories, featured project gallery, Why Choose Oakridge, construction methodology, FAQ and call to action
+- **About Us** (`about.html`): company story, values, mission and vision, milestones timeline, leadership team, client testimonials and accreditations
 - **Services** (`services.html`): six service areas, sectors, process and FAQ
 - **Projects** (`projects.html`): filterable portfolio, featured case study and key figures
 - **Our Process** (`process.html`): six-stage delivery process, commitments and FAQ
