@@ -26,8 +26,23 @@
   <link rel="preconnect" href="https://images.unsplash.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/styles.css">
-  <script>document.documentElement.classList.add("js");</script>
+  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+  <script>(function(d){d.classList.add("js");if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;try{var s=sessionStorage;if(!s.getItem("oak-visited"))d.classList.add("show-loader");if(s.getItem("oak-nav")==="1"){d.classList.add("is-entering");s.removeItem("oak-nav");}}catch(e){}})(document.documentElement);</script>
 </head><body>
+  <div class="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <svg class="loader-mark" viewBox="0 0 40 40" fill="none"><rect pathLength="1" x="0.75" y="0.75" width="38.5" height="38.5" stroke="#B58B52" stroke-width="1"/><path pathLength="1" d="M8 29 20 10l12 19" stroke="#B58B52" stroke-width="1.2"/><path pathLength="1" d="M14 29l6-9.5 6 9.5" stroke="#F5F2EB" stroke-width="1"/><path pathLength="1" d="M6 29h28" stroke="#F5F2EB" stroke-width="1"/></svg>
+      <div class="loader-word"><span>OAKRIDGE</span></div>
+      <div class="loader-bar"><i></i></div>
+      <div class="loader-meta"><span>Fictional demo &middot; Launch Point Digital</span><span class="loader-pct">0%</span></div>
+    </div>
+  </div>
+  <div class="page-curtain" aria-hidden="true"><svg  viewBox="0 0 40 40" fill="none" aria-hidden="true">
+          <rect x="0.75" y="0.75" width="38.5" height="38.5" stroke="#B58B52" stroke-width="1.2"/>
+          <path d="M8 29 20 10l12 19" stroke="#B58B52" stroke-width="1.4"/>
+          <path d="M14 29l6-9.5 6 9.5" stroke="currentColor" stroke-width="1.2"/>
+          <path d="M6 29h28" stroke="currentColor" stroke-width="1.2"/>
+        </svg></div>
   <a class="skip-link" href="#main">Skip to content</a>
 
   <header class="site-header">
@@ -48,6 +63,7 @@
           <li><a class="nav-link" href="about.html">About Us</a></li>
           <li><a class="nav-link" href="services.html">Services</a></li>
           <li><a class="nav-link" href="projects.html" aria-current="page">Projects</a></li>
+          <li><a class="nav-link" href="studio.html">3D Studio</a></li>
           <li><a class="nav-link" href="process.html">Our Process</a></li>
           <li><a class="nav-link" href="contact.html">Contact</a></li>
         </ul>
@@ -63,6 +79,7 @@
       <li><a href="about.html">About Us</a></li>
       <li><a href="services.html">Services</a></li>
       <li><a href="projects.html" aria-current="page">Projects</a></li>
+      <li><a href="studio.html">3D Studio</a></li>
       <li><a href="process.html">Our Process</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
@@ -95,73 +112,85 @@
         </div>
         <p class="visually-hidden" data-filter-status aria-live="polite"></p>
         <div class="project-grid">
-          <article class="project-card reveal" data-delay="0" data-category="commercial">
+          <article class="project-card reveal" data-delay="0" data-category="commercial" data-model="commercial">
+            <button class="project-open" type="button" data-lb-open aria-label="View details: The Sandton Exchange"></button>
             <div class="project-card-media"><img decoding="async" src="https://images.unsplash.com/photo-1574958269340-fa927503f3dd?auto=format&fit=crop&w=900&q=80" srcset="https://images.unsplash.com/photo-1574958269340-fa927503f3dd?auto=format&fit=crop&w=480&q=75 480w, https://images.unsplash.com/photo-1574958269340-fa927503f3dd?auto=format&fit=crop&w=800&q=75 800w, https://images.unsplash.com/photo-1574958269340-fa927503f3dd?auto=format&fit=crop&w=900&q=75 900w" sizes="(min-width: 1100px) 33vw, (min-width: 700px) 50vw, 100vw" alt="The Sandton Exchange, Sandton, Johannesburg" loading="lazy"><span class="tag">Commercial</span></div>
             <div class="project-card-body">
               <div><h3>The Sandton Exchange</h3><span class="project-card-meta">Sandton, Johannesburg &middot; Fictional concept</span><p class="project-card-desc">A premium office building with a high-performance glass façade, basement parking and a landscaped public piazza.</p></div>
             </div>
           </article>
           <article class="project-card reveal" data-delay="1" data-category="residential">
+            <button class="project-open" type="button" data-lb-open aria-label="View details: Umhlanga Ridge Residences"></button>
             <div class="project-card-media"><img decoding="async" src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=900&q=80" srcset="https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=480&q=75 480w, https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=800&q=75 800w, https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=900&q=75 900w" sizes="(min-width: 1100px) 33vw, (min-width: 700px) 50vw, 100vw" alt="Umhlanga Ridge Residences, Umhlanga, KwaZulu-Natal" loading="lazy"><span class="tag">Residential</span></div>
             <div class="project-card-body">
               <div><h3>Umhlanga Ridge Residences</h3><span class="project-card-meta">Umhlanga, KwaZulu-Natal &middot; Fictional concept</span><p class="project-card-desc">Sea-facing apartments arranged over terraced levels, with private pools and shared wellness spaces.</p></div>
             </div>
           </article>
           <article class="project-card reveal" data-delay="2" data-category="hospitality">
+            <button class="project-open" type="button" data-lb-open aria-label="View details: Waterberg Safari Lodge"></button>
             <div class="project-card-media"><img decoding="async" src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80" srcset="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=480&q=75 480w, https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=75 800w, https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=75 900w" sizes="(min-width: 1100px) 33vw, (min-width: 700px) 50vw, 100vw" alt="Waterberg Safari Lodge, Waterberg, Limpopo" loading="lazy"><span class="tag">Hospitality</span></div>
             <div class="project-card-body">
               <div><h3>Waterberg Safari Lodge</h3><span class="project-card-meta">Waterberg, Limpopo &middot; Fictional concept</span><p class="project-card-desc">A thatched bush lodge built from local stone and timber, designed to sit lightly in the landscape.</p></div>
             </div>
           </article>
-          <article class="project-card reveal" data-delay="0" data-category="industrial">
+          <article class="project-card reveal" data-delay="0" data-category="industrial" data-model="industrial">
+            <button class="project-open" type="button" data-lb-open aria-label="View details: Midrand Logistics Park"></button>
             <div class="project-card-media"><img decoding="async" src="https://images.unsplash.com/photo-1429497419816-9ca5cfb4571a?auto=format&fit=crop&w=900&q=80" srcset="https://images.unsplash.com/photo-1429497419816-9ca5cfb4571a?auto=format&fit=crop&w=480&q=75 480w, https://images.unsplash.com/photo-1429497419816-9ca5cfb4571a?auto=format&fit=crop&w=800&q=75 800w, https://images.unsplash.com/photo-1429497419816-9ca5cfb4571a?auto=format&fit=crop&w=900&q=75 900w" sizes="(min-width: 1100px) 33vw, (min-width: 700px) 50vw, 100vw" alt="Midrand Logistics Park, Midrand, Gauteng" loading="lazy"><span class="tag">Industrial</span></div>
             <div class="project-card-body">
               <div><h3>Midrand Logistics Park</h3><span class="project-card-meta">Midrand, Gauteng &middot; Fictional concept</span><p class="project-card-desc">A distribution facility with high-bay storage, cross-dock loading and roofs ready for solar panels.</p></div>
             </div>
           </article>
-          <article class="project-card reveal" data-delay="1" data-category="residential">
+          <article class="project-card reveal" data-delay="1" data-category="residential" data-model="residential">
+            <button class="project-open" type="button" data-lb-open aria-label="View details: Constantia Hill Villa"></button>
             <div class="project-card-media"><img decoding="async" src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=900&q=80" srcset="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=480&q=75 480w, https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=800&q=75 800w, https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=900&q=75 900w" sizes="(min-width: 1100px) 33vw, (min-width: 700px) 50vw, 100vw" alt="Constantia Hill Villa, Constantia, Cape Town" loading="lazy"><span class="tag">Residential</span></div>
             <div class="project-card-body">
               <div><h3>Constantia Hill Villa</h3><span class="project-card-meta">Constantia, Cape Town &middot; Fictional concept</span><p class="project-card-desc">A family home cut into a mountain slope, combining off-shutter concrete, timber cladding and wide glazing.</p></div>
             </div>
           </article>
           <article class="project-card reveal" data-delay="2" data-category="renovation">
+            <button class="project-open" type="button" data-lb-open aria-label="View details: Parkhurst Residence"></button>
             <div class="project-card-media"><img decoding="async" src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=80" srcset="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=480&q=75 480w, https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=75 800w, https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=75 900w" sizes="(min-width: 1100px) 33vw, (min-width: 700px) 50vw, 100vw" alt="Parkhurst Residence, Parkhurst, Johannesburg" loading="lazy"><span class="tag">Renovation</span></div>
             <div class="project-card-body">
               <div><h3>Parkhurst Residence</h3><span class="project-card-meta">Parkhurst, Johannesburg &middot; Fictional concept</span><p class="project-card-desc">A 1950s house opened up into a light-filled family home with a new living wing and timber feature wall.</p></div>
             </div>
           </article>
           <article class="project-card reveal" data-delay="0" data-category="commercial">
+            <button class="project-open" type="button" data-lb-open aria-label="View details: Foreshore Tower"></button>
             <div class="project-card-media"><img decoding="async" src="https://images.unsplash.com/photo-1460472178825-e5240623afd5?auto=format&fit=crop&w=900&q=80" srcset="https://images.unsplash.com/photo-1460472178825-e5240623afd5?auto=format&fit=crop&w=480&q=75 480w, https://images.unsplash.com/photo-1460472178825-e5240623afd5?auto=format&fit=crop&w=800&q=75 800w, https://images.unsplash.com/photo-1460472178825-e5240623afd5?auto=format&fit=crop&w=900&q=75 900w" sizes="(min-width: 1100px) 33vw, (min-width: 700px) 50vw, 100vw" alt="Foreshore Tower, Cape Town CBD" loading="lazy"><span class="tag">Commercial</span></div>
             <div class="project-card-body">
               <div><h3>Foreshore Tower</h3><span class="project-card-meta">Cape Town CBD &middot; Fictional concept</span><p class="project-card-desc">A mixed-use tower combining offices, shops and apartments above a shaded public colonnade.</p></div>
             </div>
           </article>
           <article class="project-card reveal" data-delay="1" data-category="hospitality">
+            <button class="project-open" type="button" data-lb-open aria-label="View details: Franschhoek Vineyard Hotel"></button>
             <div class="project-card-media"><img decoding="async" src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=80" srcset="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=480&q=75 480w, https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=75 800w, https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=75 900w" sizes="(min-width: 1100px) 33vw, (min-width: 700px) 50vw, 100vw" alt="Franschhoek Vineyard Hotel, Franschhoek, Western Cape" loading="lazy"><span class="tag">Hospitality</span></div>
             <div class="project-card-body">
               <div><h3>Franschhoek Vineyard Hotel</h3><span class="project-card-meta">Franschhoek, Western Cape &middot; Fictional concept</span><p class="project-card-desc">A contemporary boutique hotel among the vines, with a tasting room, spa and pool terrace.</p></div>
             </div>
           </article>
           <article class="project-card reveal" data-delay="2" data-category="industrial">
+            <button class="project-open" type="button" data-lb-open aria-label="View details: Durban Harbour Distribution Centre"></button>
             <div class="project-card-media"><img decoding="async" src="https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=900&q=80" srcset="https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=480&q=75 480w, https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=800&q=75 800w, https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=900&q=75 900w" sizes="(min-width: 1100px) 33vw, (min-width: 700px) 50vw, 100vw" alt="Durban Harbour Distribution Centre, Durban, KwaZulu-Natal" loading="lazy"><span class="tag">Industrial</span></div>
             <div class="project-card-body">
               <div><h3>Durban Harbour Distribution Centre</h3><span class="project-card-meta">Durban, KwaZulu-Natal &middot; Fictional concept</span><p class="project-card-desc">A port-side warehouse planned for container handling, with heavy-duty yards and corrosion-resistant steelwork.</p></div>
             </div>
           </article>
           <article class="project-card reveal" data-delay="0" data-category="commercial">
+            <button class="project-open" type="button" data-lb-open aria-label="View details: Menlyn Corporate Campus"></button>
             <div class="project-card-media"><img decoding="async" src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=80" srcset="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=480&q=75 480w, https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=75 800w, https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=75 900w" sizes="(min-width: 1100px) 33vw, (min-width: 700px) 50vw, 100vw" alt="Menlyn Corporate Campus, Pretoria, Gauteng" loading="lazy"><span class="tag">Commercial</span></div>
             <div class="project-card-body">
               <div><h3>Menlyn Corporate Campus</h3><span class="project-card-meta">Pretoria, Gauteng &middot; Fictional concept</span><p class="project-card-desc">A low-rise headquarters organised around shaded courtyards, with flexible open-plan floors.</p></div>
             </div>
           </article>
           <article class="project-card reveal" data-delay="1" data-category="renovation">
+            <button class="project-open" type="button" data-lb-open aria-label="View details: Rosebank Apartment Refurbishment"></button>
             <div class="project-card-media"><img decoding="async" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=900&q=80" srcset="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=480&q=75 480w, https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=75 800w, https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=900&q=75 900w" sizes="(min-width: 1100px) 33vw, (min-width: 700px) 50vw, 100vw" alt="Rosebank Apartment Refurbishment, Rosebank, Johannesburg" loading="lazy"><span class="tag">Renovation</span></div>
             <div class="project-card-body">
               <div><h3>Rosebank Apartment Refurbishment</h3><span class="project-card-meta">Rosebank, Johannesburg &middot; Fictional concept</span><p class="project-card-desc">A dated apartment reimagined with new joinery, refined finishes and a calm, gallery-like palette.</p></div>
             </div>
           </article>
           <article class="project-card reveal" data-delay="2" data-category="residential">
+            <button class="project-open" type="button" data-lb-open aria-label="View details: Ballito Coastal Home"></button>
             <div class="project-card-media"><img decoding="async" src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&w=900&q=80" srcset="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&w=480&q=75 480w, https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&w=800&q=75 800w, https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&w=900&q=75 900w" sizes="(min-width: 1100px) 33vw, (min-width: 700px) 50vw, 100vw" alt="Ballito Coastal Home, Ballito, KwaZulu-Natal" loading="lazy"><span class="tag">Residential</span></div>
             <div class="project-card-body">
               <div><h3>Ballito Coastal Home</h3><span class="project-card-meta">Ballito, KwaZulu-Natal &middot; Fictional concept</span><p class="project-card-desc">A single-storey coastal home that opens fully onto a pool deck, framed by generous roof overhangs.</p></div>
@@ -209,10 +238,31 @@
             <div><dt>Status</dt><dd>Concept only</dd></div>
           </dl>
           <p class="reveal" data-delay="3">The project shows how Oakridge would approach a constrained urban site: early contractor involvement, coordinated digital models and careful logistics to keep surrounding streets moving.</p>
-          <a class="btn reveal" data-delay="3" href="contact.html">Discuss a Similar Project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
+          <div class="reveal" data-delay="3" style="display:flex;flex-wrap:wrap;gap:1rem"><a class="btn" href="studio.html?model=commercial">Explore in 3D <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a><a class="btn btn--ghost" href="contact.html">Discuss a Similar Project</a></div>
         </div>
       </div>
     </section>
+
+    <div class="lightbox" data-lightbox hidden role="dialog" aria-modal="true" aria-labelledby="lb-title">
+      <div class="lightbox-backdrop" data-lb-close></div>
+      <div class="lightbox-panel">
+        <div class="lightbox-media"><img data-lb-img src="" alt=""></div>
+        <div class="lightbox-body">
+          <span class="project-cat" data-lb-cat></span>
+          <h2 id="lb-title" data-lb-title></h2>
+          <p class="project-card-meta" data-lb-loc></p>
+          <p data-lb-desc></p>
+          <div><a class="btn" data-lb-3d href="studio.html" hidden>Explore in 3D <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a></div>
+          <div class="lightbox-nav">
+            <button type="button" data-lb-prev aria-label="Previous project"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 12H4M10 6l-6 6 6 6"/></svg></button>
+            <span data-lb-count></span>
+            <button type="button" data-lb-next aria-label="Next project"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+        <button class="lightbox-close" type="button" data-lb-close aria-label="Close project details"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </div>
+    </div>
+
 
     <section class="cta">
       <div class="cta-bg"><img decoding="async" src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=2000&q=80" srcset="https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=480&q=75 480w, https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=800&q=75 800w, https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1200&q=75 1200w, https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1600&q=75 1600w, https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=2000&q=75 2000w" sizes="100vw" alt="" loading="lazy"></div>
@@ -321,6 +371,8 @@
 
   <button class="to-top" type="button" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 20V4M6 10l6-6 6 6"/></svg></button>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <script src="assets/js/main.js" defer></script>
 </body>
 </html>

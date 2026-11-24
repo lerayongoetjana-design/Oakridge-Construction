@@ -1,0 +1,22 @@
+<!doctype html>
+<!-- Renders stills of the 3D models for fallbacks and checks.
+     Serve the repo locally, then open tools/capture.html?model=commercial
+     Optional: &mode=hero|build|studio  &t=seconds (skip ahead)  &p=0..1 (build progress)  &x=1 (exploded) -->
+<html lang="en"><head><meta charset="utf-8"><title>capture</title>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<style>html,body{margin:0;height:100%;background:#1c1c1c}#v{position:fixed;inset:0}#v canvas{width:100%!important;height:100%!important;opacity:1!important}</style>
+</head><body><div id="v"></div>
+<script type="module">
+  import { Viewer } from "../assets/js/oak3d.js";
+  const q = new URLSearchParams(location.search);
+  const name = q.get("model") || "commercial", mode = q.get("mode") || "studio";
+  const v = new Viewer(document.getElementById("v"), { mode, capture: true, assemble: false, progress: q.has("p") ? +q.get("p") : 1 });
+  v.setHotspots(q.has("hs"));
+  await v.setModel(name);
+  if (v.controls) v.controls.autoRotate = false;
+  if (q.has("t")) v.start = performance.now() - (+q.get("t")) * 1000;
+  if (q.has("p")) v.setProgress(+q.get("p"), true);
+  if (q.has("x")) { v.explodeTarget = 1; v.explode = 1; }
+  let n = 0;
+  (function wait() { if (++n > 30) document.title = "done"; else requestAnimationFrame(wait); })();
+</script></body></html>

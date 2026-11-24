@@ -1,0 +1,8 @@
+{
+  "name": "oakridge-model-tools",
+  "private": true,
+  "type": "module",
+  "description": "Generates the original GLB building models used by the Oakridge Construction demo site.",
+  "scripts": { "models": "node generate-models.mjs" },
+  "dependencies": { "three": "0.160.0" }
+}

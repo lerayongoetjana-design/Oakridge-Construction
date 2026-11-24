@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en-ZA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>3D Studio | Oakridge Construction (Demo)</title>
+  <meta name="description" content="Explore original interactive 3D building models: rotate, zoom, open hotspots, view an exploded structure and scrub through construction.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="author" content="Launch Point Digital">
+  <meta name="theme-color" content="#1C1C1C">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Oakridge Construction (fictional demonstration)">
+  <meta property="og:title" content="3D Studio | Oakridge Construction (Demo)">
+  <meta property="og:description" content="Explore original interactive 3D building models: rotate, zoom, open hotspots, view an exploded structure and scrub through construction.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80">
+  <meta property="og:locale" content="en_ZA">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="3D Studio | Oakridge Construction (Demo)">
+  <meta name="twitter:description" content="Explore original interactive 3D building models: rotate, zoom, open hotspots, view an exploded structure and scrub through construction.">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/img/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+  <script>(function(d){d.classList.add("js");if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;try{var s=sessionStorage;if(!s.getItem("oak-visited"))d.classList.add("show-loader");if(s.getItem("oak-nav")==="1"){d.classList.add("is-entering");s.removeItem("oak-nav");}}catch(e){}})(document.documentElement);</script>
+</head><body>
+  <div class="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <svg class="loader-mark" viewBox="0 0 40 40" fill="none"><rect pathLength="1" x="0.75" y="0.75" width="38.5" height="38.5" stroke="#B58B52" stroke-width="1"/><path pathLength="1" d="M8 29 20 10l12 19" stroke="#B58B52" stroke-width="1.2"/><path pathLength="1" d="M14 29l6-9.5 6 9.5" stroke="#F5F2EB" stroke-width="1"/><path pathLength="1" d="M6 29h28" stroke="#F5F2EB" stroke-width="1"/></svg>
+      <div class="loader-word"><span>OAKRIDGE</span></div>
+      <div class="loader-bar"><i></i></div>
+      <div class="loader-meta"><span>Fictional demo &middot; Launch Point Digital</span><span class="loader-pct">0%</span></div>
+    </div>
+  </div>
+  <div class="page-curtain" aria-hidden="true"><svg  viewBox="0 0 40 40" fill="none" aria-hidden="true">
+          <rect x="0.75" y="0.75" width="38.5" height="38.5" stroke="#B58B52" stroke-width="1.2"/>
+          <path d="M8 29 20 10l12 19" stroke="#B58B52" stroke-width="1.4"/>
+          <path d="M14 29l6-9.5 6 9.5" stroke="currentColor" stroke-width="1.2"/>
+          <path d="M6 29h28" stroke="currentColor" stroke-width="1.2"/>
+        </svg></div>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="demo-bar"><div class="container"><p><strong>Fictional portfolio demonstration</strong><span class="demo-long"> &middot; Oakridge Construction is not a real company</span> &middot; Launch Point Digital</p></div></div>
+    <div class="container header-inner">
+      <a class="logo" href="index.html" aria-label="Oakridge Construction home">
+        <svg class="logo-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+          <rect x="0.75" y="0.75" width="38.5" height="38.5" stroke="#B58B52" stroke-width="1.2"/>
+          <path d="M8 29 20 10l12 19" stroke="#B58B52" stroke-width="1.4"/>
+          <path d="M14 29l6-9.5 6 9.5" stroke="currentColor" stroke-width="1.2"/>
+          <path d="M6 29h28" stroke="currentColor" stroke-width="1.2"/>
+        </svg>
+        <span class="logo-text"><span class="logo-name">OAKRIDGE</span><span class="logo-sub">CONSTRUCTION</span></span>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="index.html">Home</a></li>
+          <li><a class="nav-link" href="about.html">About Us</a></li>
+          <li><a class="nav-link" href="services.html">Services</a></li>
+          <li><a class="nav-link" href="projects.html">Projects</a></li>
+          <li><a class="nav-link" href="studio.html" aria-current="page">3D Studio</a></li>
+          <li><a class="nav-link" href="process.html">Our Process</a></li>
+          <li><a class="nav-link" href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <a class="btn header-cta" href="contact.html">Request a Quote</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu"><span></span><span></span></button>
+    </div>
+  </header>
+
+  <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile" aria-hidden="true" inert>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="studio.html" aria-current="page">3D Studio</a></li>
+      <li><a href="process.html">Our Process</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="mobile-menu-foot">
+      <p>Building Excellence. Creating Lasting Value.</p>
+      <p class="mt-2"><a href="contact.html">Request a Quote</a> &nbsp;&middot;&nbsp; <a href="services.html#calculator">Cost Calculator</a></p>
+    </div>
+  </nav>
+
+  <main id="main">
+    <section class="studio" data-oak3d-section aria-labelledby="studio-title">
+      <div class="studio-layout">
+        <div class="studio-panel">
+          <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">/</span><span aria-current="page">3D Studio</span></nav>
+          <div>
+            <span class="eyebrow" style="margin-bottom:1rem">3D Studio</span>
+            <h1 id="studio-title">Explore in <em>three dimensions</em></h1>
+          </div>
+          <div class="model-tabs" role="tablist" aria-label="Choose a building model"><button type="button" role="tab" data-model-tab="residential" aria-selected="false" tabindex="-1" class="" data-fallback="assets/img/3d/residential.jpg" data-title="Constantia Hill Villa" data-type="Residential" data-location="Constantia, Cape Town" data-text="A two-storey family home with a cantilevered timber-clad upper floor, full-height glazing and a pool terrace.">Residential</button><button type="button" role="tab" data-model-tab="commercial" aria-selected="true" tabindex="0" class="is-active" data-fallback="assets/img/3d/commercial.jpg" data-title="The Sandton Exchange" data-type="Commercial" data-location="Sandton, Johannesburg" data-text="A premium office tower on a two-storey podium, wrapped in glass and bronze fins that shade the façade.">Commercial</button><button type="button" role="tab" data-model-tab="industrial" aria-selected="false" tabindex="-1" class="" data-fallback="assets/img/3d/industrial.jpg" data-title="Midrand Logistics Park" data-type="Industrial" data-location="Midrand, Gauteng" data-text="A distribution warehouse with a clear-span steel frame, eight loading docks and a two-storey glass office.">Industrial</button></div>
+          <div class="studio-model" aria-live="polite">
+            <span class="type" data-model-field="type">Commercial</span>
+            <h2 data-model-field="title">The Sandton Exchange</h2>
+            <span class="loc" data-model-field="location">Sandton, Johannesburg</span>
+            <p data-model-field="text">A premium office tower on a two-storey podium, wrapped in glass and bronze fins that shade the façade.</p>
+            <dl class="studio-facts" data-model-field="facts"></dl>
+          </div>
+          <div>
+            <label class="studio-label" for="studio-progress">Construction stage <output data-progress-pct>100%</output></label>
+            <input class="studio-range" id="studio-progress" type="range" min="0" max="100" value="100" data-progress-range>
+            <ol class="visually-hidden"><li data-stage><button type="button" data-stage-at="0.06" class="visually-hidden">Site &amp; foundations</button></li><li data-stage><button type="button" data-stage-at="0.33" class="visually-hidden">Structural frame</button></li><li data-stage><button type="button" data-stage-at="0.62" class="visually-hidden">Façade &amp; envelope</button></li><li data-stage><button type="button" data-stage-at="0.84" class="visually-hidden">Roof &amp; services</button></li><li data-stage><button type="button" data-stage-at="1.0" class="visually-hidden">Landscaping &amp; handover</button></li></ol>
+          </div>
+          <div class="studio-tools"><button class="tool" type="button" data-action="explode" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 7l8-4 8 4-8 4z"/><path d="M4 12l8 4 8-4"/><path d="M4 17l8 4 8-4"/></svg>Exploded view</button><button class="tool" type="button" data-action="hotspots" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/></svg>Hotspots</button><button class="tool" type="button" data-action="rotate" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg>Auto-rotate</button><button class="tool" type="button" data-action="reset"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>Reset view</button></div>
+          <p class="studio-help"><strong style="color:var(--white)">Controls:</strong> drag to rotate, scroll or pinch to zoom, right-drag or two fingers to pan. When the model is focused, use the arrow keys to orbit and + / &minus; to zoom.</p>
+        </div>
+        <div class="studio-view">
+          <div class="oak3d" data-oak3d="studio" data-model="commercial">
+            <img class="oak3d-fallback" src="assets/img/3d/commercial.jpg" alt="Rendered view of the selected 3D building model">
+            <div class="oak3d-loading" aria-hidden="true"><span></span>Loading 3D model</div>
+            <p class="oak3d-nogl">3D is not available on this device, so a still render is shown.</p>
+          </div>
+          <span class="studio-badge">Original model &middot; Fictional concept</span>
+          <div class="studio-zoom">
+            <button type="button" data-action="zoom-in" aria-label="Zoom in">+</button>
+            <button type="button" data-action="zoom-out" aria-label="Zoom out">&minus;</button>
+          </div>
+          <div class="hotspot-card" data-hotspot-card hidden role="dialog" aria-labelledby="hs-title">
+            <span class="num" data-hotspot-num>01</span>
+            <h3 id="hs-title" data-hotspot-title></h3>
+            <p data-hotspot-text></p>
+            <button type="button" data-hotspot-close aria-label="Close hotspot details"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--ivory">
+      <div class="container">
+        <div class="section-head section-head--split">
+          <div>
+            <span class="eyebrow reveal">The Models</span>
+            <h2 class="reveal" data-delay="1">Three buildings, <em>built in code</em></h2>
+          </div>
+          <p class="reveal" data-delay="2">Each model was created from scratch for this demonstration and is split into foundations, frame, envelope, roof and landscaping, which is what powers the construction sequence and exploded view.</p>
+        </div>
+        <div class="model-cards">
+          <article class="model-card">
+            <img src="assets/img/3d/residential.jpg" alt="Render of the Constantia Hill Villa model" loading="lazy" width="1600" height="1000">
+            <div>
+              <span class="project-cat" style="color:var(--bronze)">Residential</span>
+              <h3>Constantia Hill Villa</h3>
+              <p>A two-storey family home with a cantilevered timber-clad upper floor, full-height glazing and a pool terrace.</p>
+              <a class="link-arrow" href="studio.html?model=residential">Load this model <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
+            </div>
+          </article>
+          <article class="model-card">
+            <img src="assets/img/3d/commercial.jpg" alt="Render of the The Sandton Exchange model" loading="lazy" width="1600" height="1000">
+            <div>
+              <span class="project-cat" style="color:var(--bronze)">Commercial</span>
+              <h3>The Sandton Exchange</h3>
+              <p>A premium office tower on a two-storey podium, wrapped in glass and bronze fins that shade the façade.</p>
+              <a class="link-arrow" href="studio.html?model=commercial">Load this model <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
+            </div>
+          </article>
+          <article class="model-card">
+            <img src="assets/img/3d/industrial.jpg" alt="Render of the Midrand Logistics Park model" loading="lazy" width="1600" height="1000">
+            <div>
+              <span class="project-cat" style="color:var(--bronze)">Industrial</span>
+              <h3>Midrand Logistics Park</h3>
+              <p>A distribution warehouse with a clear-span steel frame, eight loading docks and a two-storey glass office.</p>
+              <a class="link-arrow" href="studio.html?model=industrial">Load this model <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="cta-bg"><img decoding="async" src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=2000&q=80" srcset="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=480&q=75 480w, https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=800&q=75 800w, https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1200&q=75 1200w, https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1600&q=75 1600w, https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=2000&q=75 2000w" sizes="100vw" alt="" loading="lazy"></div>
+      <div class="container">
+        <div class="reveal">
+          <span class="eyebrow">Start Your Project</span>
+          <h2>See your project <em>before</em> it is built.</h2>
+          <p>Talk to Oakridge about bringing 3D visualisation into your next development.</p>
+        </div>
+        <div class="reveal" data-delay="1" style="display:flex;flex-wrap:wrap;gap:1rem">
+          <a class="btn" href="contact.html">Request a Quote <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
+          <a class="btn btn--ghost" href="services.html#calculator">Estimate Your Cost</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a class="logo" href="index.html" aria-label="Oakridge Construction home">
+            <svg class="logo-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+          <rect x="0.75" y="0.75" width="38.5" height="38.5" stroke="#B58B52" stroke-width="1.2"/>
+          <path d="M8 29 20 10l12 19" stroke="#B58B52" stroke-width="1.4"/>
+          <path d="M14 29l6-9.5 6 9.5" stroke="currentColor" stroke-width="1.2"/>
+          <path d="M6 29h28" stroke="currentColor" stroke-width="1.2"/>
+        </svg>
+            <span class="logo-text"><span class="logo-name">OAKRIDGE</span><span class="logo-sub">CONSTRUCTION</span></span>
+          </a>
+          <p class="footer-slogan">Building Excellence.<br>Creating Lasting Value.</p>
+          <p>A fictional South African construction company created to demonstrate premium web design for the construction industry.</p>
+        </div>
+        <nav aria-label="Footer: company">
+          <h2 class="footer-title">Company</h2>
+          <ul class="footer-links">
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="about.html#leadership">Leadership</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="process.html">Our Process</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        <nav aria-label="Footer: services">
+          <h2 class="footer-title">Services</h2>
+          <ul class="footer-links">
+            <li><a href="services.html#residential">Residential</a></li>
+            <li><a href="services.html#commercial">Commercial</a></li>
+            <li><a href="services.html#industrial">Industrial</a></li>
+            <li><a href="services.html#renovations">Renovations</a></li>
+            <li><a href="services.html#development">Property Development</a></li>
+            <li><a href="services.html#management">Project Management</a></li>
+          </ul>
+        </nav>
+        <div>
+          <h2 class="footer-title">Head Office</h2>
+          <ul class="footer-links">
+            <li>Oakridge House, Rivonia Road<br>Sandton, Johannesburg</li>
+            <li><a href="tel:+27110000198">+27 11 000 0198</a></li>
+            <li><a href="mailto:enquiries@oakridge.example">enquiries@oakridge.example</a></li>
+            <li>Mon – Fri, 07:30 – 17:00</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; <span data-year>2026</span> Oakridge Construction (fictional). All rights reserved.</span>
+        <span>Photography via <a href="https://unsplash.com/license" rel="noopener" target="_blank">Unsplash</a></span>
+        <p class="demo-note">Oakridge Construction is a fictional company. This website is a portfolio demonstration designed and developed by Launch Point Digital. All names, people, projects, figures, addresses and contact details are invented for illustration. No forms on this site collect, transmit or store personal information.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="wa" data-wa>
+    <div class="wa-panel" id="wa-panel" role="dialog" aria-labelledby="wa-title" hidden>
+      <div class="wa-head">
+        <span class="wa-avatar"><svg  viewBox="0 0 40 40" fill="none" aria-hidden="true">
+          <rect x="0.75" y="0.75" width="38.5" height="38.5" stroke="#B58B52" stroke-width="1.2"/>
+          <path d="M8 29 20 10l12 19" stroke="#B58B52" stroke-width="1.4"/>
+          <path d="M14 29l6-9.5 6 9.5" stroke="currentColor" stroke-width="1.2"/>
+          <path d="M6 29h28" stroke="currentColor" stroke-width="1.2"/>
+        </svg></span>
+        <div><strong id="wa-title">Oakridge Construction</strong><span>WhatsApp enquiry &middot; Demonstration</span></div>
+        <button class="wa-close" type="button" aria-label="Close chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </div>
+      <div class="wa-body" data-wa-log aria-live="polite">
+        <p class="wa-note">Demonstration only. Messages are not sent, collected or stored.</p>
+        <div class="wa-msg wa-msg--in">Good day, and welcome to Oakridge Construction. How can we help with your project today?</div>
+      </div>
+      <div class="wa-chips">
+        <button type="button" data-wa-chip="quote">Request a quote</button>
+        <button type="button" data-wa-chip="visit">Book a site visit</button>
+        <button type="button" data-wa-chip="timeline">Typical timelines</button>
+        <button type="button" data-wa-chip="offices">Office locations</button>
+      </div>
+      <form class="wa-form" data-wa-form autocomplete="off">
+        <label class="visually-hidden" for="wa-input">Type a message (demonstration, not sent)</label>
+        <input id="wa-input" type="text" placeholder="Type a message">
+        <button type="submit" aria-label="Send message"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.4 20.4 21 12 3.4 3.6 3.4 10l12.6 2-12.6 2z"/></svg></button>
+      </form>
+    </div>
+    <button class="wa-toggle" type="button" aria-expanded="false" aria-controls="wa-panel" aria-label="Open WhatsApp enquiry demo">
+      <svg class="wa-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.87 9.87 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.22 8.22 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24a8.24 8.24 0 0 1 8.24 8.25c0 4.54-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48a.92.92 0 0 0-.67.31c-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.28z"/></svg>
+      <svg class="wa-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+
+  <button class="to-top" type="button" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 20V4M6 10l6-6 6 6"/></svg></button>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>

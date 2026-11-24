@@ -26,8 +26,23 @@
   <link rel="preconnect" href="https://images.unsplash.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/styles.css">
-  <script>document.documentElement.classList.add("js");</script>
+  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+  <script>(function(d){d.classList.add("js");if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;try{var s=sessionStorage;if(!s.getItem("oak-visited"))d.classList.add("show-loader");if(s.getItem("oak-nav")==="1"){d.classList.add("is-entering");s.removeItem("oak-nav");}}catch(e){}})(document.documentElement);</script>
 </head><body>
+  <div class="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <svg class="loader-mark" viewBox="0 0 40 40" fill="none"><rect pathLength="1" x="0.75" y="0.75" width="38.5" height="38.5" stroke="#B58B52" stroke-width="1"/><path pathLength="1" d="M8 29 20 10l12 19" stroke="#B58B52" stroke-width="1.2"/><path pathLength="1" d="M14 29l6-9.5 6 9.5" stroke="#F5F2EB" stroke-width="1"/><path pathLength="1" d="M6 29h28" stroke="#F5F2EB" stroke-width="1"/></svg>
+      <div class="loader-word"><span>OAKRIDGE</span></div>
+      <div class="loader-bar"><i></i></div>
+      <div class="loader-meta"><span>Fictional demo &middot; Launch Point Digital</span><span class="loader-pct">0%</span></div>
+    </div>
+  </div>
+  <div class="page-curtain" aria-hidden="true"><svg  viewBox="0 0 40 40" fill="none" aria-hidden="true">
+          <rect x="0.75" y="0.75" width="38.5" height="38.5" stroke="#B58B52" stroke-width="1.2"/>
+          <path d="M8 29 20 10l12 19" stroke="#B58B52" stroke-width="1.4"/>
+          <path d="M14 29l6-9.5 6 9.5" stroke="currentColor" stroke-width="1.2"/>
+          <path d="M6 29h28" stroke="currentColor" stroke-width="1.2"/>
+        </svg></div>
   <a class="skip-link" href="#main">Skip to content</a>
 
   <header class="site-header">
@@ -48,6 +63,7 @@
           <li><a class="nav-link" href="about.html">About Us</a></li>
           <li><a class="nav-link" href="services.html">Services</a></li>
           <li><a class="nav-link" href="projects.html">Projects</a></li>
+          <li><a class="nav-link" href="studio.html">3D Studio</a></li>
           <li><a class="nav-link" href="process.html">Our Process</a></li>
           <li><a class="nav-link" href="contact.html">Contact</a></li>
         </ul>
@@ -63,6 +79,7 @@
       <li><a href="about.html">About Us</a></li>
       <li><a href="services.html">Services</a></li>
       <li><a href="projects.html">Projects</a></li>
+      <li><a href="studio.html">3D Studio</a></li>
       <li><a href="process.html">Our Process</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
@@ -73,8 +90,9 @@
   </nav>
 
   <main id="main">
-    <section class="hero">
-      <div class="hero-media"><img decoding="async" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2400&q=80" srcset="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=480&q=75 480w, https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=75 800w, https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=75 1200w, https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=75 1600w, https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2000&q=75 2000w, https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2400&q=75 2400w" sizes="100vw" alt="Modern glass office towers rising into the sky" fetchpriority="high"></div>
+    <section class="hero hero--3d">
+      <div class="hero-media"><img decoding="async" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2400&q=80" srcset="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=480&q=75 480w, https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=75 800w, https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=75 1200w, https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=75 1600w, https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2000&q=75 2000w, https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2400&q=75 2400w" sizes="100vw" alt="" fetchpriority="high"></div>
+      <div class="oak3d hero-3d" data-oak3d="hero" data-model="commercial" aria-hidden="true"></div>
       <div class="container hero-content">
         <span class="eyebrow" data-hero="1">Construction &nbsp;&middot;&nbsp; South Africa</span>
         <h1 data-hero="2">Building <em>Excellence.</em><br> Creating Lasting Value.</h1>
@@ -117,6 +135,34 @@
             <img decoding="async" src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=160&q=80" alt="" loading="lazy" width="58" height="58">
             <div><strong>Nomvula Dlamini</strong><span>Chief Executive Officer (fictional)</span></div>
           </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="build" data-build-section data-oak3d-section aria-labelledby="build-title">
+      <div class="build-inner">
+        <div class="build-copy">
+          <span class="eyebrow">Construction Sequence</span>
+          <h2 id="build-title">From foundation to <em>finish</em></h2>
+          <p>Scroll to watch an original 3D model rise, stage by stage, from bare site to completed building.</p>
+          <div class="mt-2"><div class="model-tabs" role="tablist" aria-label="Choose a building type"><button type="button" role="tab" data-model-tab="residential" aria-selected="false" tabindex="-1" class="" data-fallback="assets/img/3d/residential.jpg" data-title="Constantia Hill Villa" data-type="Residential" data-location="Constantia, Cape Town" data-text="A two-storey family home with a cantilevered timber-clad upper floor, full-height glazing and a pool terrace.">Residential</button><button type="button" role="tab" data-model-tab="commercial" aria-selected="true" tabindex="0" class="is-active" data-fallback="assets/img/3d/commercial.jpg" data-title="The Sandton Exchange" data-type="Commercial" data-location="Sandton, Johannesburg" data-text="A premium office tower on a two-storey podium, wrapped in glass and bronze fins that shade the façade.">Commercial</button><button type="button" role="tab" data-model-tab="industrial" aria-selected="false" tabindex="-1" class="" data-fallback="assets/img/3d/industrial.jpg" data-title="Midrand Logistics Park" data-type="Industrial" data-location="Midrand, Gauteng" data-text="A distribution warehouse with a clear-span steel frame, eight loading docks and a two-storey glass office.">Industrial</button></div></div>
+          <ol class="stage-list">
+              <li data-stage><button type="button" data-stage-at="0.06">Site &amp; foundations</button></li>
+              <li data-stage><button type="button" data-stage-at="0.33">Structural frame</button></li>
+              <li data-stage><button type="button" data-stage-at="0.62">Façade &amp; envelope</button></li>
+              <li data-stage><button type="button" data-stage-at="0.84">Roof &amp; services</button></li>
+              <li data-stage><button type="button" data-stage-at="1.0">Landscaping &amp; handover</button></li>
+          </ol>
+          <div class="build-progress"><span>Progress</span><span class="track"><i data-progress-bar></i></span><span data-progress-pct>0%</span></div>
+          <div class="build-range"><label class="visually-hidden" for="build-range">Construction progress</label><input id="build-range" type="range" min="0" max="100" value="0" data-progress-range></div>
+          <p class="build-hint build-hint--scroll">Keep scrolling to build &middot; <a href="studio.html" style="color:var(--bronze-light)">Open the 3D Studio</a></p>
+          <p class="build-hint build-hint--manual">Use the slider or the stages above &middot; <a href="studio.html" style="color:var(--bronze-light)">Open the 3D Studio</a></p>
+        </div>
+        <div class="oak3d build-stage" data-oak3d="build" data-model="commercial">
+          <img class="oak3d-fallback" src="assets/img/3d/commercial.jpg" alt="Rendered view of The Sandton Exchange, an original 3D model of a fictional office tower" loading="lazy">
+          <div class="oak3d-loading" aria-hidden="true"><span></span>Loading 3D model</div>
+          <p class="oak3d-nogl">3D is not available on this device, so a still render is shown.</p>
         </div>
       </div>
     </section>
@@ -425,6 +471,8 @@
 
   <button class="to-top" type="button" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 20V4M6 10l6-6 6 6"/></svg></button>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <script src="assets/js/main.js" defer></script>
 </body>
 </html>
