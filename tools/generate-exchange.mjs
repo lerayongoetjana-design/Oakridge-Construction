@@ -117,10 +117,13 @@ class Piece {
 }
 
 /** InstancedMesh from a geometry and a list of [x, y, z, rotY, scale]. */
-function instanced(name, geometry, mat, items) {
+function instanced(name, geometry, mat, items, extras) {
   geometry.deleteAttribute("uv");
   const im = new THREE.InstancedMesh(geometry, mat, items.length);
   im.name = name;
+  // Placement data in plain numbers, so the website can rebuild detailed
+  // foliage regardless of how the mesh data is compressed.
+  if (extras) im.userData = extras;
   items.forEach(([x, y, z, ry = 0, s = 1, sy = s], i) => {
     tmp.position.set(x, y, z); tmp.rotation.set(0, ry, 0); tmp.scale.set(s, sy, s); tmp.updateMatrix();
     im.setMatrixAt(i, tmp.matrix);
@@ -159,7 +162,7 @@ const SHRUB = place(new THREE.IcosahedronGeometry(0.7, 1), 0, 0.45, 0, 0, 0, 0, 
 function addTrees(p, items, kind = "round") {
   const t = kind === "round" ? ROUND : CYPRESS;
   p.object(instanced(`${p.name}-trunks-${kind}`, t.trunk.clone(), M.bark, items));
-  p.object(instanced(`${p.name}-crowns-${kind}`, t.crown.clone(), M.foliage, items));
+  p.object(instanced(`${p.name}-crowns-${kind}`, t.crown.clone(), M.foliage, items, { foliage: kind, items: items.map((a) => a.map((v) => +(+v).toFixed(3))) }));
 }
 
 const BENCH = mergeGeometries([
@@ -546,7 +549,8 @@ function site(P) {
   addTrees(s, [[-21, 0.66, 20, 0.4, 1.0], [-21, 0.66, 27, 2.1, 0.9], [21, 0.66, 20, 1.2, 0.95], [21, 0.66, 27, 3.0, 1.05]], "round");
   addTrees(s, [[-24.5, 0.08, -18, 0, 0.9], [-24.5, 0.08, -8, 0, 1], [-24.5, 0.08, 2, 0, 0.95], [-24.5, 0.08, 12, 0, 1], [24.5, 0.08, -18, 0, 1], [24.5, 0.08, -8, 0, 0.9], [24.5, 0.08, 2, 0, 1.05], [24.5, 0.08, 12, 0, 0.95]], "cypress");
   s.object(instanced("plaza-benches", BENCH.clone(), M.timber, [[-14, 0.08, 23.2, 0], [14, 0.08, 23.2, 0], [-14, 0.08, 31, Math.PI], [14, 0.08, 31, Math.PI], [-6, 0.08, 31, Math.PI], [6, 0.08, 31, Math.PI]]));
-  s.object(instanced("plaza-shrubs", SHRUB.clone(), M.shrub, [[-16, 0.14, 19.5], [-14.5, 0.14, 21.5], [-17.5, 0.14, 21.8], [16, 0.14, 19.5], [14.5, 0.14, 21.5], [17.5, 0.14, 21.8], [-19, 0.66, 23.5], [19, 0.66, 23.5], [-23, 0.66, 24], [23, 0.66, 24]]));
+  const plazaShrubs = [[-16, 0.14, 19.5], [-14.5, 0.14, 21.5], [-17.5, 0.14, 21.8], [16, 0.14, 19.5], [14.5, 0.14, 21.5], [17.5, 0.14, 21.8], [-19, 0.66, 23.5], [19, 0.66, 23.5], [-23, 0.66, 24], [23, 0.66, 24]];
+  s.object(instanced("plaza-shrubs", SHRUB.clone(), M.shrub, plazaShrubs, { foliage: "shrub", items: plazaShrubs }));
   P.push(s);
 }
 
@@ -607,7 +611,8 @@ function environment() {
   for (let z = -160; z <= 30; z += 16) trees.push([64.5, 0.12, z, rnd() * 6, rr(0.85, 1.1)]);
   const g = new Piece("env-trees", { env: true, landscape: true });
   addTrees(g, trees, "round");
-  g.object(instanced("env-shrubs", SHRUB.clone(), M.shrub, Array.from({ length: 60 }, () => [rr(29, 45), 0.06, rr(-20, 28), rnd() * 6, rr(0.7, 1.4)]).filter(([x]) => Math.abs(x - 37.2) > 2)));
+  const envShrubs = Array.from({ length: 60 }, () => [rr(29, 45), 0.06, rr(-20, 28), rnd() * 6, rr(0.7, 1.4)]).filter(([x]) => Math.abs(x - 37.2) > 2).map((a) => a.map((v) => +v.toFixed(3)));
+  g.object(instanced("env-shrubs", SHRUB.clone(), M.shrub, envShrubs, { foliage: "shrub", items: envShrubs }));
   root.add(g.build());
 
   // streetlights and benches

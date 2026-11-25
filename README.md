@@ -39,7 +39,7 @@ Residential construction, commercial construction, industrial construction, reno
 - **Environment:** `assets/models/environment.glb` (about 180 KB) holds roads with markings, sidewalks, parking bays with instanced cars, landscaped gardens with instanced trees and shrubs, streetlights, benches, a basement ramp, neighbouring buildings and a distant skyline.
 - **Rendering:**
   - **Materials:** physically based, with glass transmission on capable devices and reflective glass on phones.
-  - **Sky and lighting:** a physical sky drives both the background and the environment lighting.
+  - **Sky and lighting:** CC0 HDRI skies drive the background, reflections and ambient light.
   - **Shadows and effects:** soft shadows, ambient occlusion (desktop), bloom for illuminated elements, and filmic tone mapping.
   - **Textures:** generated in the browser and mapped in world space.
 - **Controls:**
@@ -64,11 +64,16 @@ node generate-models.mjs            # residential + industrial models for the ho
 
 Fallback stills in `assets/img/3d/` are rendered from the live models (see `tools/capture.html`).
 
-### Known limits (would need additional assets)
+### Realism assets (CC0, Poly Haven)
 
-- Environment lighting comes from a procedural physical sky rather than a photographic HDRI. A CC0 HDRI (for example from Poly Haven) would give richer reflections.
-- Surface textures are generated in the browser. Photo-scanned PBR texture sets (concrete, stone, paving, timber), including normal and roughness maps, would add close-up realism.
-- Trees, cars and furniture are original but stylised geometry. Licensed, professionally modelled GLB assets would be needed for photographic detail.
+- **Skies** (`assets/sky/`): four HDRIs photographed in South Africa (Qwantani and Kloofendal). They light the scene and fill the glass reflections for each lighting mode, with 1K `.hdr` files for lighting and 4K/2K JPEGs for the visible sky.
+- **Surfaces** (`assets/textures/`): scanned colour, roughness and normal maps for concrete, board-formed concrete, stone, timber, paving, asphalt, grass and bark, mapped in world space.
+- **Licence:** all are CC0 from [polyhaven.com](https://polyhaven.com), with no attribution required (credited here as a courtesy).
+
+### Known limits
+
+- **Reflections:** glass reflects the sky but not neighbouring buildings, because real-time screen-space reflections were left out for performance.
+- **Stylised objects:** trees use painted leaf cards, and cars and furniture are original but stylised geometry. Photographic detail would need licensed, professionally modelled assets.
 
 ## Interactive features
 

@@ -7,7 +7,8 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { Sky } from "three/addons/objects/Sky.js";
+import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
+import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
@@ -19,7 +20,7 @@ const COARSE = window.matchMedia("(pointer: coarse)").matches;
 const SMALL = Math.min(window.innerWidth, window.innerHeight) < 700;
 const LOW_POWER = COARSE || SMALL;
 const asset = (p) => new URL(`../${p}`, import.meta.url).href;
-const MODEL_BYTES = { commercial: 524156, environment: 182688 };
+const MODEL_BYTES = { commercial: 524688, environment: 186292 };
 
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const smooth = (t) => t * t * (3 - 2 * t);
@@ -95,11 +96,15 @@ const PLAN_TEXT = {
   roof: "Roof terrace in front of a louvred, solar-topped plant enclosure.",
 };
 
+/* Lighting modes. Each uses a CC0 HDRI sky from Poly Haven (photographed in
+   South Africa) for the visible sky, reflections and ambient light. The sky is
+   rotated so its sun sits at the chosen azimuth (theta, degrees), and the
+   directional light follows it. hdriTheta and elev were measured from the files. */
 export const MODES = {
-  morning: { label: "Morning", elev: 13, azim: 112, sun: 0xffd6ad, sunI: 3.0, hemi: 0.55, hemiSky: 0xd6e2f0, hemiGround: 0x5e5040, turb: 6, ray: 2.0, mie: 0.006, exposure: 0.5, fog: 0xc8c3b8, fogD: 0.0016, interior: 0.5, exterior: 0, glow: 0, bloom: 0.04, windows: 0 },
-  afternoon: { label: "Afternoon", elev: 50, azim: 215, sun: 0xfff3e2, sunI: 3.6, hemi: 0.6, hemiSky: 0xd9e6f2, hemiGround: 0x5a5244, turb: 3.2, ray: 1.0, mie: 0.004, exposure: 0.42, fog: 0xbcc6cc, fogD: 0.0013, interior: 0.35, exterior: 0, glow: 0, bloom: 0, windows: 0 },
-  sunset: { label: "Sunset", elev: 4, azim: 286, sun: 0xff9a5c, sunI: 2.8, hemi: 0.45, hemiSky: 0xffcda6, hemiGround: 0x3b2e26, turb: 7, ray: 2.4, mie: 0.008, exposure: 0.6, fog: 0xb39a86, fogD: 0.0014, interior: 1.8, exterior: 0.8, glow: 0.04, bloom: 0.32, windows: 0.7 },
-  night: { label: "Night", elev: -8, azim: 300, lightElev: 35, sun: 0x9db3e3, sunI: 0.45, hemi: 0.22, hemiSky: 0x2d3a58, hemiGround: 0x15120f, turb: 2, ray: 0.5, mie: 0.002, exposure: 1.0, fog: 0x121826, fogD: 0.0024, interior: 5, exterior: 2.6, glow: 0.12, bloom: 0.7, windows: 1.8 },
+  morning: { label: "Morning", sky: "morning", hdriTheta: 53.9, theta: 105, elev: 27.9, sun: 0xffe3c4, sunI: 2.6, envI: 0.85, bgI: 1.15, exposure: 0.9, hemi: 0.12, hemiSky: 0xcfe0f5, hemiGround: 0x5e5040, fog: 0xc9d6e3, fogD: 0.0011, interior: 0.5, exterior: 0, glow: 0, bloom: 0, windows: 0 },
+  afternoon: { label: "Afternoon", sky: "afternoon", hdriTheta: 55.7, theta: 30, elev: 48, sun: 0xfff5e8, sunI: 3.0, envI: 0.85, bgI: 1.15, exposure: 0.85, hemi: 0.12, hemiSky: 0xd9e6f2, hemiGround: 0x5a5244, fog: 0xd4deea, fogD: 0.001, interior: 0.35, exterior: 0, glow: 0, bloom: 0, windows: 0 },
+  sunset: { label: "Sunset", sky: "sunset", hdriTheta: 54.0, theta: 245, elev: 6.2, sun: 0xffa566, sunI: 2.5, envI: 0.8, bgI: 1.1, exposure: 1.0, hemi: 0.1, hemiSky: 0xffcda6, hemiGround: 0x3b2e26, fog: 0xdcc0a6, fogD: 0.0012, interior: 1.8, exterior: 0.8, glow: 0.04, bloom: 0.32, windows: 0.7 },
+  night: { label: "Night", sky: "night", hdriTheta: 0, theta: 200, elev: 38, sun: 0xa9bde8, sunI: 0.3, envI: 0.45, bgI: 0.55, exposure: 1.0, hemi: 0.08, hemiSky: 0x2d3a58, hemiGround: 0x15120f, fog: 0x151c2a, fogD: 0.0018, interior: 5, exterior: 2.6, glow: 0.12, bloom: 0.7, windows: 1.8 },
 };
 
 export const OPTIONS = {
@@ -217,9 +222,17 @@ function buildTextures() {
   });
 }
 
-/** World-space texturing, so procedural textures tile correctly without UVs. */
-function triplanar(mat, tex, scale) {
-  const u = { triMap: { value: tex }, triScale: { value: scale }, triEmis: { value: 0 } };
+const DATA_TEX = (rgba) => { const t = new THREE.DataTexture(new Uint8Array(rgba), 1, 1); t.needsUpdate = true; return t; };
+const WHITE_TEX = DATA_TEX([255, 255, 255, 255]);
+const FLAT_NORMAL = DATA_TEX([128, 128, 255, 255]);
+
+/** World-space (triplanar) PBR texturing: colour, roughness and normal maps tile
+    correctly on the generated geometry, which has no UV coordinates. */
+function triplanar(mat, tex, scale, norScale = 1) {
+  const u = {
+    triMap: { value: tex }, triRough: { value: WHITE_TEX }, triNor: { value: FLAT_NORMAL },
+    triScale: { value: scale }, triNorScale: { value: norScale }, triEmis: { value: 0 },
+  };
   mat.userData.tri = u;
   mat.onBeforeCompile = (sh) => {
     Object.assign(sh.uniforms, u);
@@ -229,16 +242,70 @@ function triplanar(mat, tex, scale) {
         triP = instanceMatrix * triP; triNo = mat3(instanceMatrix) * triNo;
       #endif
       vTriPos = (modelMatrix * triP).xyz; vTriN = normalize(mat3(modelMatrix) * triNo);`);
-    sh.fragmentShader = "uniform sampler2D triMap;\nuniform float triScale;\nuniform float triEmis;\nvarying vec3 vTriPos;\nvarying vec3 vTriN;\n" +
-      sh.fragmentShader.replace("#include <map_fragment>", `#include <map_fragment>
+    sh.fragmentShader = "uniform sampler2D triMap;\nuniform sampler2D triRough;\nuniform sampler2D triNor;\nuniform float triScale;\nuniform float triNorScale;\nuniform float triEmis;\nvarying vec3 vTriPos;\nvarying vec3 vTriN;\n" +
+      sh.fragmentShader
+        .replace("#include <map_fragment>", `#include <map_fragment>
       vec3 triA = abs(normalize(vTriN));
-      vec2 triUV = triA.y > max(triA.x, triA.z) ? vTriPos.xz : (triA.x > triA.z ? vTriPos.zy : vTriPos.xy);
-      vec4 triTex = texture2D(triMap, triUV * triScale);
+      int triAxis = triA.y > max(triA.x, triA.z) ? 1 : (triA.x > triA.z ? 0 : 2);
+      vec2 triUV = (triAxis == 1 ? vTriPos.xz : (triAxis == 0 ? vTriPos.zy : vTriPos.xy)) * triScale;
+      vec4 triTex = texture2D(triMap, triUV);
       diffuseColor.rgb *= triTex.rgb;
-      totalEmissiveRadiance += step(0.97, triTex.g) * triEmis * vec3(1.0, 0.8, 0.55);`);
+      totalEmissiveRadiance += step(0.97, triTex.g) * triEmis * vec3(1.0, 0.8, 0.55);`)
+        .replace("#include <roughnessmap_fragment>", `float roughnessFactor = roughness * texture2D(triRough, triUV).g;`)
+        .replace("#include <normal_fragment_maps>", `#include <normal_fragment_maps>
+      {
+        vec3 triNw = normalize(vTriN);
+        vec3 triT = triAxis == 0 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);
+        vec3 triB = triAxis == 1 ? vec3(0.0, 0.0, 1.0) : vec3(0.0, 1.0, 0.0);
+        vec3 triTn = texture2D(triNor, triUV).xyz * 2.0 - 1.0;
+        triTn.xy *= triNorScale;
+        vec3 triNp = normalize(triT * triTn.x + triB * triTn.y + triNw * max(triTn.z, 0.05));
+        normal = normalize((viewMatrix * vec4(triNp, 0.0)).xyz);
+      }`);
   };
-  mat.customProgramCacheKey = () => "tri";
+  mat.customProgramCacheKey = () => "tri-pbr";
   mat.needsUpdate = true;
+}
+
+/* Foliage: leaf-card crowns with a painted, alpha-tested leaf texture --------- */
+function leafTexture() {
+  return canvasTexture(512, (g, s) => {
+    g.clearRect(0, 0, s, s);
+    for (let i = 0; i < 260; i++) {
+      const x = s * (0.12 + Math.random() * 0.76), y = s * (0.12 + Math.random() * 0.76);
+      const rx = 9 + Math.random() * 12, ry = 4 + Math.random() * 5;
+      const h = 82 + Math.random() * 30, sat = 30 + Math.random() * 25, l = 16 + Math.random() * 24;
+      g.save(); g.translate(x, y); g.rotate(Math.random() * Math.PI * 2);
+      const grd = g.createLinearGradient(-rx, 0, rx, 0);
+      grd.addColorStop(0, `hsl(${h},${sat}%,${l * 0.7}%)`); grd.addColorStop(1, `hsl(${h},${sat}%,${l * 1.25}%)`);
+      g.fillStyle = grd; g.beginPath(); g.ellipse(0, 0, rx, ry, 0, 0, Math.PI * 2); g.fill();
+      g.strokeStyle = `hsla(${h},${sat}%,${l * 0.5}%,0.6)`; g.lineWidth = 0.8; g.beginPath(); g.moveTo(-rx, 0); g.lineTo(rx, 0); g.stroke();
+      g.restore();
+    }
+  });
+}
+function leafCrown(blobs, perBlob, size) {
+  const parts = [];
+  const up = new THREE.Vector3(0, 1, 0);
+  for (const [bx, by, bz, r] of blobs) {
+    for (let i = 0; i < perBlob; i++) {
+      const v = new THREE.Vector3().randomDirection().multiplyScalar(r * Math.cbrt(Math.random()) * 0.9);
+      v.y *= 0.85;
+      const q = new THREE.PlaneGeometry(1, 1);
+      const sc = size * (0.75 + Math.random() * 0.6);
+      const m = new THREE.Matrix4().compose(
+        new THREE.Vector3(bx + v.x, by + v.y, bz + v.z),
+        new THREE.Quaternion().setFromEuler(new THREE.Euler(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI)),
+        new THREE.Vector3(sc, sc, sc));
+      q.applyMatrix4(m);
+      // Normals point away from the crown centre for soft, rounded shading.
+      const n = v.clone().normalize().add(up.clone().multiplyScalar(0.35)).normalize();
+      const na = q.attributes.normal;
+      for (let k = 0; k < na.count; k++) na.setXYZ(k, n.x, n.y, n.z);
+      parts.push(q);
+    }
+  }
+  return mergeGeometries(parts);
 }
 
 function shown(o) { for (; o; o = o.parent) if (!o.visible) return false; return true; }
@@ -258,7 +325,7 @@ class Experience {
     this.selected = -1; this.slide = 0;
     this.config = {};
     Object.keys(OPTIONS).forEach((k) => (this.config[k] = OPTIONS[k].default));
-    this.modeName = "sunset";
+    this.modeName = "afternoon";
     this.panelShift = 0;
     this.frames = [];
     this.visible = true;
@@ -284,9 +351,8 @@ class Experience {
     this.camera.position.set(260, 220, 300);
 
     // Physical sky (background) and a second copy rendered into the environment map
-    this.sky = new Sky(); this.sky.scale.setScalar(4500); scene.add(this.sky);
-    this.envScene = new THREE.Scene(); this.envSky = new Sky(); this.envSky.scale.setScalar(4500); this.envScene.add(this.envSky);
     this.pmrem = new THREE.PMREMGenerator(r);
+    this.skies = {};
     this.sunDir = new THREE.Vector3();
     scene.fog = new THREE.FogExp2(0xb9b0a3, 0.0016);
 
@@ -337,7 +403,8 @@ class Experience {
     buildTextures();
     await this.load();
     this.prepareMaterials();
-    this.applyMode(this.modeName, true);
+    await this.applyMode(this.modeName, true);
+    this.upgradeVegetation();
     Object.keys(this.config).forEach((k) => this.setOption(k, this.config[k], true));
     this.applyTimeline();
     this.buildHotspots();
@@ -348,6 +415,7 @@ class Experience {
     requestAnimationFrame(this.tick);
     this.root.classList.add("is-ready");
     this.runIntro();
+    this.loadTextures();
   }
 
   load() {
@@ -389,24 +457,31 @@ class Experience {
     each("grass", (m) => triplanar(m, TEX.grass, 1 / 4));
     each("ground", (m) => triplanar(m, TEX.grass, 1 / 10));
     each("timber", (m) => triplanar(m, TEX.timber, 1 / 1.6));
+    each("bark", (m) => triplanar(m, TEX.concrete, 1));
     each("neighbour-stone", (m) => triplanar(m, TEX.windows, 1 / 8));
     each("neighbour-dark", (m) => triplanar(m, TEX.windows, 1 / 8));
     each("skyline", (m) => triplanar(m, TEX.windows, 1 / 10));
 
     // Glass: transmission on capable devices, reflective glass on low-power ones
+    // Glass: Fresnel reflections of the real sky, with the interior showing through
     ["glass", "glass-lobby", "glass-balustrade"].forEach((n) => each(n, (m) => {
-      m.envMapIntensity = 1.4;
       m.emissive = new THREE.Color(0xffd2a0);
-      if (LOW_POWER) { m.transmission = 0; m.transparent = true; m.opacity = n === "glass" ? 0.72 : 0.35; m.metalness = 0.35; }
+      // Curtain-wall glass: dark solar tint so the sky reflection dominates, as on real towers.
+      m.roughness = 0; m.metalness = 0; m.ior = 1.52; m.specularIntensity = 1; m.envMapIntensity = n === "glass" ? 1.6 : 1.4;
+      // Reflective (low-e coated) glass: a partly metallic finish mirrors the sky.
+      if (n === "glass") { m.color.setHex(0x45525b); m.metalness = 0.8; m.roughness = 0.02; }
+      if (n === "glass-lobby") m.metalness = 0.15;
+      if (LOW_POWER) { m.transmission = 0; m.transparent = true; m.opacity = n === "glass" ? 0.94 : 0.4; }
       else {
-        m.thickness = 0.05; m.attenuationDistance = 8;
-        if (n === "glass") { m.transmission = 0.55; m.roughness = 0.02; m.ior = 1.52; m.envMapIntensity = 2.2; m.specularIntensity = 1; }
+        m.thickness = 0.04; m.attenuationDistance = 6;
+        m.transmission = n === "glass" ? 0.14 : n === "glass-lobby" ? 0.7 : 0.85;
       }
       m.needsUpdate = true;
     }));
-    each("aluminium", (m) => { m.envMapIntensity = 1.3; });
-    each("water", (m) => { m.envMapIntensity = 1.6; m.roughness = 0.02; });
-    ["paint-white", "paint-charcoal", "paint-silver", "paint-bronze"].forEach((n) => each(n, (m) => { m.envMapIntensity = 1.4; }));
+    each("aluminium", (m) => { m.envMapIntensity = 1.2; m.roughness = 0.28; m.metalness = 0.95; });
+    each("water", (m) => { m.envMapIntensity = 1.3; m.roughness = 0.01; m.metalness = 0.15; m.color.setHex(0x2a4550); });
+    ["paint-white", "paint-charcoal", "paint-silver", "paint-bronze"].forEach((n) => each(n, (m) => { m.envMapIntensity = 1.2; m.roughness = 0.2; }));
+    each("car-glass", (m) => { m.roughness = 0.02; });
 
     // Shadows and piece bookkeeping
     this.building.traverse((o) => {
@@ -444,44 +519,76 @@ class Experience {
   }
 
   /* ---------- lighting modes -------------------------------------------------- */
-  modeValues(name) { return MODES[name]; }
-  applyMode(name, instant) {
+  async loadSky(name) {
+    if (this.skies[name]) return this.skies[name];
+    const env = new RGBELoader().loadAsync(asset(`sky/${name}-1k.hdr`)).then((t) => {
+      t.mapping = THREE.EquirectangularReflectionMapping;
+      const rt = this.pmrem.fromEquirectangular(t);
+      t.dispose();
+      return rt.texture;
+    });
+    const bg = new THREE.TextureLoader().loadAsync(asset(`sky/${name}-${LOW_POWER ? "2k" : "4k"}.jpg`)).then((t) => {
+      t.mapping = THREE.EquirectangularReflectionMapping;
+      t.colorSpace = THREE.SRGBColorSpace;
+      return t;
+    });
+    const [e, b] = await Promise.all([env, bg]);
+    return (this.skies[name] = { env: e, bg: b });
+  }
+
+  async applyMode(name, instant) {
     const to = MODES[name];
     this.modeName = name;
     this.qa("[data-mode]").forEach((b) => b.setAttribute("aria-pressed", String(b.getAttribute("data-mode") === name)));
+    const token = (this.modeToken = (this.modeToken || 0) + 1);
+    this.root.classList.add("is-sky-loading");
+    let sky = null;
+    try { sky = await this.loadSky(to.sky); } catch (e) { console.warn("Sky unavailable", e); }
+    if (token !== this.modeToken) return;
+    this.root.classList.remove("is-sky-loading");
+
+    const dirOf = (m) => new THREE.Vector3().setFromSphericalCoords(1, THREE.MathUtils.degToRad(90 - m.elev), THREE.MathUtils.degToRad(m.theta));
     const L = this.light;
-    const from = L ? { ...L, sun: L.sun.getHex(), hemiSky: L.hemiSky.getHex(), hemiGround: L.hemiGround.getHex(), fog: L.fog.getHex() } : to;
-    const keys = ["elev", "sunI", "hemi", "turb", "ray", "mie", "exposure", "fogD", "interior", "exterior", "glow", "bloom", "windows"];
+    const from = L ? { ...L, sun: L.sun.getHex(), hemiSky: L.hemiSky.getHex(), hemiGround: L.hemiGround.getHex(), fog: L.fog.getHex() } : { ...to, dir: dirOf(to) };
+    const keys = ["sunI", "envI", "bgI", "hemi", "exposure", "fogD", "interior", "exterior", "glow", "bloom", "windows"];
     const colors = ["sun", "hemiSky", "hemiGround", "fog"];
-    let n = 0;
+    const toDir = dirOf(to);
+    const swapSky = () => {
+      if (!sky) return;
+      this.scene.background = sky.bg;
+      this.scene.environment = sky.env;
+      const rot = THREE.MathUtils.degToRad(to.theta - to.hdriTheta);
+      this.scene.backgroundRotation.set(0, rot, 0);
+      this.scene.environmentRotation.set(0, rot, 0);
+    };
     const step = (t) => {
       const cur = {};
       keys.forEach((k) => (cur[k] = lerp(from[k], to[k], t)));
-      let da = to.azim - from.azim; if (da > 180) da -= 360; if (da < -180) da += 360;
-      cur.azim = from.azim + da * t;
-      cur.lightElev = lerp(from.lightElev ?? Math.max(from.elev, 6), to.lightElev ?? Math.max(to.elev, 6), t);
       colors.forEach((k) => (cur[k] = new THREE.Color(from[k]).lerp(new THREE.Color(to[k]), t)));
-      this.setLighting(cur, t >= 1 || ++n % 8 === 0);
+      cur.dir = from.dir.clone().lerp(toDir, t).normalize();
+      this.setLighting(cur);
     };
     if (this.modeTween) { this.modeTween.kill(); this.modeTween = null; }
-    if (instant || REDUCE || !window.gsap) { step(1); return; }
-    const st = { t: 0 };
-    this.modeTween = window.gsap.to(st, { t: 1, duration: 2.2, ease: "power2.inOut", onUpdate: () => step(st.t), onComplete: () => { this.modeTween = null; } });
+    if (instant || REDUCE || !window.gsap) { swapSky(); step(1); return; }
+    // Dip the sky brightness while the new sky is swapped in, then bring it up.
+    const st = { t: 0 }; let swapped = false;
+    this.modeTween = window.gsap.to(st, {
+      t: 1, duration: 2.2, ease: "power2.inOut",
+      onUpdate: () => {
+        if (!swapped && st.t >= 0.5) { swapSky(); swapped = true; }
+        step(st.t);
+        this.scene.backgroundIntensity = this.light.bgI * (0.35 + 0.65 * Math.abs(st.t - 0.5) * 2);
+      },
+      onComplete: () => { this.modeTween = null; },
+    });
   }
 
-  setLighting(c, rebuildEnv) {
-    const phi = THREE.MathUtils.degToRad(90 - c.elev), theta = THREE.MathUtils.degToRad(c.azim);
-    this.sunDir.setFromSphericalCoords(1, phi, theta);
-    for (const s of [this.sky, this.envSky]) {
-      const u = s.material.uniforms;
-      u.turbidity.value = c.turb; u.rayleigh.value = c.ray; u.mieCoefficient.value = c.mie; u.mieDirectionalG.value = 0.82;
-      u.sunPosition.value.copy(this.sunDir);
-    }
-    const lphi = THREE.MathUtils.degToRad(90 - c.lightElev);
-    const ld = new THREE.Vector3().setFromSphericalCoords(1, lphi, theta);
-    this.sun.position.copy(ld.multiplyScalar(260)).add(this.sun.target.position);
+  setLighting(c) {
+    this.sun.position.copy(c.dir).multiplyScalar(260).add(this.sun.target.position);
     this.sun.color.copy(c.sun); this.sun.intensity = c.sunI;
     this.hemi.color.copy(c.hemiSky); this.hemi.groundColor.copy(c.hemiGround); this.hemi.intensity = c.hemi;
+    this.scene.environmentIntensity = c.envI;
+    this.scene.backgroundIntensity = c.bgI;
     this.scene.fog.color.copy(c.fog); this.scene.fog.density = c.fogD;
     this.renderer.toneMappingExposure = c.exposure;
     this.bloom.strength = c.bloom;
@@ -489,10 +596,85 @@ class Experience {
     this.lobbyLight.intensity = lerp(8, 45, clamp(c.interior / 5));
     this.light = c;
     this.applyEmissive();
-    if (rebuildEnv) {
-      if (this.envRT) this.envRT.dispose();
-      this.envRT = this.pmrem.fromScene(this.envScene, 0, 1, 10000);
-      this.scene.environment = this.envRT.texture;
+  }
+
+  /* ---------- scanned PBR surfaces (CC0, Poly Haven) -------------------------- */
+  async loadTextures() {
+    const tl = new THREE.TextureLoader();
+    const aniso = Math.min(8, this.renderer.capabilities.getMaxAnisotropy());
+    const load = (p, srgb) => tl.loadAsync(asset(`textures/${p}.jpg`)).then((t) => {
+      t.wrapS = t.wrapT = THREE.RepeatWrapping;
+      t.colorSpace = srgb ? THREE.SRGBColorSpace : THREE.NoColorSpace;
+      t.anisotropy = aniso;
+      return t;
+    });
+    const sets = ["concrete", "board", "stone", "timber", "paving", "asphalt", "grass", "bark"];
+    const pbr = {};
+    try {
+      await Promise.all(sets.map(async (s) => {
+        const [map, rough, nor] = await Promise.all([load(`${s}/diff`, true), load(`${s}/rough`), load(`${s}/nor`)]);
+        pbr[s] = { map, rough, nor };
+      }));
+    } catch (e) { console.warn("Surface textures unavailable, keeping generated ones.", e); return; }
+    this.pbr = pbr;
+    this.applySurfaces();
+  }
+
+  applySurfaces() {
+    const P = this.pbr;
+    if (!P) return;
+    const each = (n, fn) => (this.mats[n] || []).forEach(fn);
+    const use = (m, set, scale, tint, rough = 1, metal = 0, nor = 1) => {
+      const u = m.userData.tri; if (!u) return;
+      u.triMap.value = set.map; u.triRough.value = set.rough; u.triNor.value = set.nor;
+      u.triScale.value = scale; u.triNorScale.value = nor;
+      m.color.setHex(tint); m.roughness = rough; m.metalness = metal;
+    };
+    const cl = this.config.cladding, cc = this.config.concrete, ls = this.config.landscape;
+    each("cladding", (m) => cl === "charcoal" ? use(m, P.concrete, 1 / 2.5, 0x4a4a4b, 0.7, 0.35, 0.8)
+      : use(m, P.stone, 1 / 2, cl === "ivory" ? 0xfff8ee : 0xf4ede2, 1, 0, 1));
+    each("concrete", (m) => cc === "board" ? use(m, P.board, 1 / 2.5, 0xf6f2ec, 1, 0, 1)
+      : use(m, P.concrete, 1 / 2.5, cc === "dark" ? 0x77726c : 0xffffff, cc === "dark" ? 0.55 : 1, 0, 1));
+    each("stone-floor", (m) => use(m, P.concrete, 1 / 3, 0xf3efe8, 0.35, 0, 0.4));
+    each("timber", (m) => use(m, P.timber, 1 / 1.4, 0xffffff, 0.9, 0, 1));
+    each("paving", (m) => use(m, P.paving, 1 / 2.5, 0xffffff, 1, 0, 1));
+    each("asphalt", (m) => use(m, P.asphalt, 1 / 4, 0xb9b9b9, 1, 0, 1));
+    const grassTint = { lush: 0x86b25c, fynbos: 0xc4b483, minimal: 0xd2c4a6 }[ls];
+    each("grass", (m) => use(m, P.grass, 1 / 3, grassTint, 1, 0, 0.8));
+    each("ground", (m) => use(m, P.grass, 1 / 7, new THREE.Color(grassTint).multiplyScalar(0.82).getHex(), 1, 0, 0.6));
+    each("bark", (m) => use(m, P.bark, 1, 0xffffff, 1, 0, 1));
+    this.root.classList.add("has-scanned-textures");
+  }
+
+  upgradeVegetation() {
+    const tex = leafTexture();
+    const leaf = new THREE.MeshStandardMaterial({ name: "leaf", map: tex, alphaTest: 0.5, side: THREE.DoubleSide, roughness: 0.78, metalness: 0 });
+    const depth = new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking, map: tex, alphaTest: 0.5 });
+    this.mats.leaf = new Set([leaf]);
+    const geos = {
+      round: leafCrown([[0, 4.6, 0, 1.9], [1.1, 4.1, 0.5, 1.4], [-1.0, 4.2, -0.4, 1.5], [0.2, 5.4, -0.6, 1.3], [-0.4, 3.8, 1.0, 1.2]], 24, 1.15),
+      cypress: leafCrown([[0, 2.6, 0, 1.0], [0, 3.8, 0, 1.0], [0, 5.0, 0, 0.85], [0, 6.1, 0, 0.65], [0, 7.0, 0, 0.4]], 16, 0.9),
+      shrub: leafCrown([[0, 0.45, 0, 0.75]], 18, 0.6),
+    };
+    const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), up = new THREE.Vector3(0, 1, 0);
+    const swaps = [];
+    for (const root of [this.building, this.env]) root.traverse((o) => { if (o.isInstancedMesh && o.userData.foliage) swaps.push(o); });
+    for (const o of swaps) {
+      const items = o.userData.items || [];
+      const im = new THREE.InstancedMesh(geos[o.userData.foliage], leaf, items.length);
+      items.forEach(([x, y, z, ry = 0, sc = 1], i) => {
+        q.setFromAxisAngle(up, ry);
+        im.setMatrixAt(i, m4.compose(new THREE.Vector3(x, y, z), q, new THREE.Vector3(sc, sc, sc)));
+      });
+      im.castShadow = true; im.receiveShadow = true;
+      im.customDepthMaterial = depth;
+      im.frustumCulled = false;
+      // Undo the re-basing applied to the parent construction piece, if any.
+      const piece = this.pieces.find((p) => p.obj === o.parent);
+      if (piece) im.position.y = -piece.baseY;
+      o.parent.add(im);
+      o.visible = false;
+      o.userData.replaced = true;
     }
   }
 
@@ -514,22 +696,28 @@ class Experience {
     this.config[group] = key;
     const val = OPTIONS[group].items[key][1];
     const each = (n, fn) => (this.mats[n] || []).forEach(fn);
-    if (group === "glass") each("glass", (m) => { m.color.setHex(val); if (m.attenuationColor) m.attenuationColor.setHex(val); });
-    if (group === "cladding") each("cladding", (m) => {
+    if (group === "glass") each("glass", (m) => {
+      // Tints darken the base so reflections stay strong.
+      const c = new THREE.Color(val).multiplyScalar(0.33);
+      m.color.copy(c); if (m.attenuationColor) m.attenuationColor.setHex(val);
+    });
+    if ((group === "cladding" || group === "concrete" || group === "landscape") && this.pbr) this.applySurfaces();
+    if (group === "cladding" && !this.pbr) each("cladding", (m) => {
       m.color.setHex(val);
       m.metalness = key === "charcoal" ? 0.55 : 0; m.roughness = key === "charcoal" ? 0.38 : key === "ivory" ? 0.5 : 0.62;
       if (m.userData.tri) m.userData.tri.triMap.value = key === "travertine" ? TEX.stone : TEX.concrete;
     });
     if (group === "frame") each("aluminium", (m) => { m.color.setHex(val); m.roughness = key === "black" ? 0.45 : 0.32; });
-    if (group === "concrete") each("concrete", (m) => {
+    if (group === "concrete" && !this.pbr) each("concrete", (m) => {
       m.color.setHex(val); m.roughness = key === "dark" ? 0.4 : 0.86;
       if (m.userData.tri) m.userData.tri.triMap.value = key === "board" ? TEX.board : TEX.concrete;
     });
     if (group === "lighting") this.applyEmissive();
     if (group === "landscape") {
       const pal = { lush: [0x55703a, 0x3f5d2a, 0x4a6a33, true], fynbos: [0x8a8656, 0x6b7146, 0x9a6e5e, true], minimal: [0xb9ad97, 0x5d6a42, 0x4a6a33, false] }[key];
-      each("grass", (m) => m.color.setHex(pal[0]));
+      if (!this.pbr) each("grass", (m) => m.color.setHex(pal[0]));
       each("foliage", (m) => m.color.setHex(pal[1]));
+      each("leaf", (m) => m.color.setHex({ lush: 0xffffff, fynbos: 0xc9c08e, minimal: 0xddd3ae }[key]));
       each("shrub", (m) => { m.color.setHex(pal[2]); m.visible = pal[3]; });
     }
     if (group === "roof") this.applyTimeline();
@@ -792,7 +980,7 @@ class Experience {
     this.setTimeline(8);
     this.explodeTarget = 0; this.selectFloor(-1);
     Object.keys(OPTIONS).forEach((k) => this.setOption(k, OPTIONS[k].default, true));
-    this.applyMode("sunset");
+    this.applyMode("afternoon");
     this.camera_("front");
     this.announce("Experience reset");
   }
