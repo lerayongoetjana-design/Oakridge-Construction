@@ -10,7 +10,7 @@ A premium, multi-page website for **Oakridge Construction**, a *fictional* South
 
 | Page | File | Highlights |
 | --- | --- | --- |
-| Home | `index.html` | Photographic hero (architectural visual concept), scroll-driven 3D construction sequence, introduction, four service categories, featured projects, Why Choose Oakridge, construction methodology, FAQ, call to action |
+| Home | `index.html` | Live 3D hero (slow cinematic orbit of The Sandton Exchange, with the concept photo as poster and fallback), scroll-driven 3D construction sequence, introduction, four service categories, featured projects, Why Choose Oakridge, construction methodology, FAQ, call to action |
 | About Us | `about.html` | Story, values, mission and vision, timeline, fictional leadership team, standards |
 | Services | `services.html` | Six services, illustrative rand cost calculator, sectors, process, FAQ |
 | Projects | `projects.html` | Filterable gallery with lightbox and tilt cards, before-and-after slider, featured concept |

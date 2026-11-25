@@ -312,7 +312,8 @@ function shown(o) { for (; o; o = o.parent) if (!o.visible) return false; return
 
 /* ====================================================== EXPERIENCE ======== */
 class Experience {
-  constructor(root) {
+  constructor(root, opts = {}) {
+    this.hero = !!opts.hero;
     this.root = root;
     this.stage = root.querySelector("[data-xp-stage]");
     this.q = (s) => root.querySelector(s);
@@ -407,14 +408,13 @@ class Experience {
     this.upgradeVegetation();
     Object.keys(this.config).forEach((k) => this.setOption(k, this.config[k], true));
     this.applyTimeline();
-    this.buildHotspots();
-    this.bindUI();
+    if (!this.hero) { this.buildHotspots(); this.bindUI(); }
 
     this.tick = this.tick.bind(this);
     this.clock = new THREE.Clock();
     requestAnimationFrame(this.tick);
     this.root.classList.add("is-ready");
-    this.runIntro();
+    if (this.hero) this.startHero(); else this.runIntro();
     this.loadTextures();
   }
 
@@ -1034,7 +1034,43 @@ class Experience {
     this.camera.aspect = w / h;
     this.updateViewOffset(true);
   }
+  /* ---------- homepage hero: cinematic, non-interactive ----------------------- */
+  startHero() {
+    this.controls.enabled = false;
+    this.heroT0 = performance.now();
+    this.mouse = { x: 0, y: 0, sx: 0, sy: 0 };
+    if (!REDUCE && !COARSE) {
+      window.addEventListener("pointermove", (e) => {
+        this.mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+        this.mouse.y = (e.clientY / window.innerHeight) * 2 - 1;
+      }, { passive: true });
+    }
+    if (window.oakIntro) window.oakIntro.then(() => { this.heroT0 = performance.now(); });
+  }
+  heroCamera() {
+    const t = (performance.now() - this.heroT0) / 1000;
+    const k = REDUCE ? 1 : smooth(clamp(t / 6));          // approach from the air
+    const portrait = this.h > this.w;
+    this.mouse.sx = lerp(this.mouse.sx, this.mouse.x, 0.04);
+    this.mouse.sy = lerp(this.mouse.sy, this.mouse.y, 0.04);
+    const angle = 0.55 + (REDUCE ? 0 : t * 0.022) + this.mouse.sx * 0.06;
+    // Orbit stays inside the plaza (neighbouring blocks start ~65 m out);
+    // a wider lens keeps the whole tower in frame from this close.
+    const radius = lerp(260, portrait ? 62 : 64, k);
+    const height = lerp(190, portrait ? 9 : 12, k) - this.mouse.sy * 3;
+    this.camera.position.set(Math.sin(angle) * radius, height, Math.cos(angle) * radius);
+    this.camera.lookAt(0, lerp(10, portrait ? 28 : 28, k), 2);
+  }
+
   updateViewOffset(force) {
+    if (this.hero) {
+      this.camera.fov = this.h > this.w ? 74 : 56;
+      // Sit the building to the right of the headline on wide screens.
+      if (this.w > 900) this.camera.setViewOffset(this.w, this.h, -this.w * 0.24, 0, this.w, this.h);
+      else this.camera.clearViewOffset();
+      this.camera.updateProjectionMatrix();
+      return;
+    }
     // Keep the building clear of open panels: shift the view left (desktop) or up (mobile).
     const wide = this.w > 900;
     const open = this.root.classList.contains("has-panel");
@@ -1079,8 +1115,8 @@ class Experience {
     const far = this.camera.position.length() > 230 && this.explodeTarget === 0;
     this.interiorGroups.forEach((p) => { if (p.built > 0.002) p.obj.visible = !far; });
 
-    this.updateViewOffset(false);
-    this.controls.update();
+    if (this.hero) this.heroCamera();
+    else { this.updateViewOffset(false); this.controls.update(); }
     this.composer.render(dt);
     this.placeHotspots(this.frame);
     this.adapt(dt);
@@ -1089,7 +1125,7 @@ class Experience {
 
 /* ======================================================== MOUNT ============ */
 export async function mount(root) {
-  const xp = new Experience(root);
+  const xp = new Experience(root, { hero: root.hasAttribute("data-xp-hero") });
   root.__xp = xp;
   try {
     await xp.init();

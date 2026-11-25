@@ -490,6 +490,19 @@
     }
   }
 
+  // Homepage hero: live 3D over the photo poster, loaded after the page settles.
+  var heroXp = document.querySelector("[data-xp-hero]");
+  if (heroXp && webglOK() && "noModule" in HTMLScriptElement.prototype) {
+    var startHero = function () {
+      new Function("u", "return import(u)")(new URL("experience.js", SCRIPT_SRC).href)
+        .then(function (m) { return m.mount(heroXp); })
+        .then(function () { if (heroXp.classList.contains("is-ready")) heroXp.closest(".hero").classList.add("is-live-3d"); })
+        .catch(function (err) { if (window.console) console.warn("3D hero unavailable, keeping the photo.", err); });
+    };
+    var afterLoad = function () { window.oakIntro.then(function () { setTimeout(startHero, 150); }); };
+    if (document.readyState === "complete") afterLoad(); else window.addEventListener("load", afterLoad);
+  }
+
   // Static-image fallback still lets visitors switch models.
   document.querySelectorAll("[data-oak3d-section]").forEach(function (sec) {
     var stage = sec.querySelector("[data-oak3d]");
