@@ -10,7 +10,7 @@ A premium, multi-page website for **Oakridge Construction**, a *fictional* South
 
 | Page | File | Highlights |
 | --- | --- | --- |
-| Home | `index.html` | Cinematic 3D hero, scroll-driven 3D construction sequence, introduction, four service categories, featured projects, Why Choose Oakridge, construction methodology, FAQ, call to action |
+| Home | `index.html` | Photographic hero (architectural visual concept), scroll-driven 3D construction sequence, introduction, four service categories, featured projects, Why Choose Oakridge, construction methodology, FAQ, call to action |
 | About Us | `about.html` | Story, values, mission and vision, timeline, fictional leadership team, standards |
 | Services | `services.html` | Six services, illustrative rand cost calculator, sectors, process, FAQ |
 | Projects | `projects.html` | Filterable gallery with lightbox and tilt cards, before-and-after slider, featured concept |
@@ -106,5 +106,7 @@ Typography pairs **Cormorant Garamond** (headings) with **Manrope** (body text).
 - Images use responsive `srcset`, lazy loading and async decoding.
 
 ## Image credits
+
+The homepage hero (`assets/img/hero-office.jpg`) is an architectural visual concept supplied for this project. It follows the same design direction as the 3D model but is not a rendering of its exact geometry.
 
 Architectural and portrait photography from [Unsplash](https://unsplash.com), used under the [Unsplash License](https://unsplash.com/license). Images are illustrative and do not depict real Oakridge projects or staff.
