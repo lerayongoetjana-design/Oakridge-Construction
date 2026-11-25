@@ -10,7 +10,7 @@ A premium, multi-page website for **Oakridge Construction**, a *fictional* South
 
 | Page | File | Highlights |
 | --- | --- | --- |
-| Home | `index.html` | Live 3D hero (slow cinematic orbit of The Sandton Exchange, with the concept photo as poster and fallback), scroll-driven 3D construction sequence, introduction, four service categories, featured projects, Why Choose Oakridge, construction methodology, FAQ, call to action |
+| Home | `index.html` | Hero: the concept photo rendered in 3D (depth-displaced mesh with camera drift, mouse and scroll parallax; flat photo as fallback), scroll-driven 3D construction sequence, introduction, four service categories, featured project gallery, Why Choose Oakridge, construction methodology, FAQ and call to action |
 | About Us | `about.html` | Story, values, mission and vision, timeline, fictional leadership team, standards |
 | Services | `services.html` | Six services, illustrative rand cost calculator, sectors, process, FAQ |
 | Projects | `projects.html` | Filterable gallery with lightbox and tilt cards, before-and-after slider, featured concept |
@@ -112,6 +112,6 @@ Typography pairs **Cormorant Garamond** (headings) with **Manrope** (body text).
 
 ## Image credits
 
-The homepage hero (`assets/img/hero-office.jpg`) is an architectural visual concept supplied for this project. It follows the same design direction as the 3D model but is not a rendering of its exact geometry.
+The homepage hero (`assets/img/hero-office.jpg`) is an architectural visual concept supplied for this project. Its 3D depth comes from a depth map (`assets/img/hero-office-depth.png`) estimated locally with Depth Anything V2 (see `tools/make-depth.mjs`). It follows the same design direction as the 3D model but is not a rendering of its exact geometry.
 
 Architectural and portrait photography from [Unsplash](https://unsplash.com), used under the [Unsplash License](https://unsplash.com/license). Images are illustrative and do not depict real Oakridge projects or staff.

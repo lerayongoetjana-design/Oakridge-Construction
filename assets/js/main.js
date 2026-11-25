@@ -490,17 +490,15 @@
     }
   }
 
-  // Homepage hero: live 3D over the photo poster, loaded after the page settles.
-  var heroXp = document.querySelector("[data-xp-hero]");
-  if (heroXp && webglOK() && "noModule" in HTMLScriptElement.prototype) {
-    var startHero = function () {
-      new Function("u", "return import(u)")(new URL("experience.js", SCRIPT_SRC).href)
-        .then(function (m) { return m.mount(heroXp); })
-        .then(function () { if (heroXp.classList.contains("is-ready")) heroXp.closest(".hero").classList.add("is-live-3d"); })
+  // Homepage hero: the concept photo rendered in 3D (depth-displaced), over the static photo.
+  var heroDepth = document.querySelector("[data-depth-hero]");
+  if (heroDepth && webglOK() && "noModule" in HTMLScriptElement.prototype) {
+    var startDepth = function () {
+      new Function("u", "return import(u)")(new URL("hero-depth.js", SCRIPT_SRC).href)
+        .then(function (m) { return m.mount(heroDepth); })
         .catch(function (err) { if (window.console) console.warn("3D hero unavailable, keeping the photo.", err); });
     };
-    var afterLoad = function () { window.oakIntro.then(function () { setTimeout(startHero, 150); }); };
-    if (document.readyState === "complete") afterLoad(); else window.addEventListener("load", afterLoad);
+    if (document.readyState === "complete") startDepth(); else window.addEventListener("load", startDepth);
   }
 
   // Static-image fallback still lets visitors switch models.
